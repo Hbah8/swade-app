@@ -26,3 +26,4 @@ dist-ssr
 # LAN Proxy Data
 server/data/*.json
 !server/data/.gitkeep
+src-tauri/resources/*

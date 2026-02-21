@@ -1,0 +1,73 @@
+name: Tauri MSI Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'package.json'
+      - 'scripts/**'
+      - 'server/**'
+      - 'src-tauri/**'
+      - '.github/workflows/tauri-msi-smoke.yml'
+
+jobs:
+  windows-smoke:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install WiX Toolset
+        shell: pwsh
+        run: choco install wixtoolset --no-progress -y
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Bootstrap Tauri contract
+        run: npm run bootstrap:tauri
+
+      - name: Preflight + setup tests
+        run: npm run preflight:tauri
+
+      - name: Build proxy executable
+        run: npm run build:proxy
+
+      - name: Proxy smoke test (/health)
+        shell: pwsh
+        run: |
+          $env:PROXY_PORT='5191'
+          $env:PROXY_HOST='127.0.0.1'
+          $env:SERVE_STATIC='true'
+          $env:STATIC_DIR=(Resolve-Path dist).Path
+          $p = Start-Process -FilePath "src-tauri/resources/proxy/proxy.exe" -PassThru
+          Start-Sleep -Seconds 2
+          $r = Invoke-WebRequest -Uri "http://127.0.0.1:5191/health" -UseBasicParsing -TimeoutSec 5
+          if ($r.StatusCode -ne 200) { throw "Health check failed with status $($r.StatusCode)" }
+          if (!$p.HasExited) { Stop-Process -Id $p.Id -Force }
+
+      - name: Build MSI
+        run: npm run build:tauri
+
+      - name: Assert MSI artifact
+        shell: pwsh
+        run: |
+          $msi = Get-ChildItem "src-tauri/target/release/bundle/msi/*.msi" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $msi) { throw "MSI artifact not found" }
+          Write-Output "MSI: $($msi.FullName)"
+
+      - name: Upload MSI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: msi-smoke
+          path: src-tauri/target/release/bundle/msi/*.msi

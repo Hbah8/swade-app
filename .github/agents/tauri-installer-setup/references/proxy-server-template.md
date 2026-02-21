@@ -33,7 +33,7 @@ app.get('/health', (_req, res) => {
 
 if (shouldServeStatic && fs.existsSync(staticDir)) {
   app.use(express.static(staticDir, { index: false }));
-  app.get('*', (req, res, next) => {
+  app.use((req, res, next) => {
     if (req.path.startsWith('/api/')) return next();
     return res.sendFile(path.join(staticDir, 'index.html'));
   });

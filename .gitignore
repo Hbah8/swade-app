@@ -27,3 +27,4 @@ dist-ssr
 server/data/*.json
 !server/data/.gitkeep
 src-tauri/resources/*
+src-tauri/target/*

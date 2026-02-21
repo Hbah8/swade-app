@@ -7,10 +7,12 @@ Commands and scripts for Phase 5 — producing the MSI installer.
 ```json
 {
   "scripts": {
+      "bootstrap:tauri": "node scripts/bootstrap-tauri.cjs",
+      "preflight:tauri": "node scripts/preflight-tauri.cjs && npm run test -- scripts/tauri-setup.test.js",
     "build": "tsc -b && vite build",
     "build:proxy": "pkg server/proxy.cjs --targets node18-win-x64 --output src-tauri/resources/proxy/proxy.exe",
     "prepare:tauri": "node scripts/prepare-tauri-resources.cjs",
-    "build:tauri": "npm run build && npm run build:proxy && npm run prepare:tauri && tauri build --bundles msi"
+      "build:tauri": "npm run preflight:tauri && npm run build && npm run build:proxy && npm run prepare:tauri && tauri build --bundles msi"
   }
 }
 ```
@@ -91,3 +93,14 @@ npx tauri --version
 | Health check responds | `curl http://127.0.0.1:5174/health` |
 | Proxy routes work | Test API calls through the app |
 | Uninstall is clean | No leftover files in Program Files |
+
+## Troubleshooting (Error → Cause → Fix)
+
+| Error text (example) | Likely root cause | Fix command / action |
+|---|---|---|
+| `Couldn't recognize the current folder as a Tauri project` | Missing `src-tauri/tauri.conf.json` and/or Cargo scaffold | Run repository preflight test, then restore scaffold files |
+| `Error Can't read and decode source image` | Invalid icon source format when generating Tauri icons | Use a valid PNG source, regenerate icons, ensure `src-tauri/icons/icon.ico` exists |
+| `` `icons/icon.ico` not found `` | Icon not generated or not bundled | Regenerate icons and verify `bundle.icon` paths in `tauri.conf.json` |
+| `Missing parameter name at index 1: *` | Express 5 route parsing with brittle wildcard pattern | Replace `app.get('*')` fallback with middleware fallback `app.use(...)` |
+| `Warning Babel parse has failed: import.meta` during `pkg` | ESM entrypoint can trigger `pkg` bytecode warnings | Prefer CJS-friendly proxy entry in packaging examples or accept warning if binary is produced |
+

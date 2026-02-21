@@ -1,4 +1,3 @@
-````skill
 ---
 name: tauri-installer-setup
 description: Step-by-step guide for setting up a new Tauri v1 desktop app with React, TypeScript, Vite, Tailwind 4, and MSI installer packaging. Covers requirements, project scaffolding, proxy bundling, and final installer build.
@@ -11,6 +10,67 @@ Reference for bootstrapping a new desktop application that ships as a Windows MS
 - Setting up MSI packaging for an existing web app
 - Configuring a proxy-based offline architecture
 - Reviewing installer build pipeline configuration
+
+
+## Documentation Contract
+
+This skill is the **source of truth for architecture concepts and implementation standards**.
+
+- Use this file for: goals, rules, sequencing, and required constraints.
+- Use files in `references/` for: concrete commands, full templates, and copy-ready examples.
+- If there is any mismatch, update both with the same intent and keep references aligned with these standards.
+
+**Quick rule:** standards and concepts live here; runnable examples and templates live in `references/`.
+
+---
+
+## Tauri MSI Template (Minimal)
+
+This template contains pre-wired baseline files for a browser-launched Tauri MSI app with a packaged Node proxy.
+
+Included files:
+- `src-tauri/tauri.conf.json`
+- `src-tauri/Cargo.toml`
+- `src-tauri/build.rs`
+- `src-tauri/src/main.rs`
+- `server/proxy.cjs`
+- `scripts/tauri-setup.test.js`
+
+Use from project root:
+
+```bash
+npm run bootstrap:tauri
+```
+
+Use `npm run bootstrap:tauri -- --force` to overwrite existing files.
+
+## Repo-Specific Preflight
+
+Before running `npm run build:tauri`, validate that this repository has the expected scaffolding.
+
+**Bootstrap command (from scratch / repair):**
+
+```bash
+npm run bootstrap:tauri
+```
+
+**Required files:**
+- `src-tauri/tauri.conf.json`
+- `src-tauri/Cargo.toml`
+- `src-tauri/build.rs`
+- `src-tauri/src/main.rs`
+- `src-tauri/icons/icon.ico`
+
+**Required scripts in `package.json`:**
+- `build:proxy` (outputs to `src-tauri/resources/proxy/proxy.exe`)
+- `prepare:tauri` (copies frontend build to `src-tauri/resources/web`)
+- `build:tauri` (runs build → proxy → prepare → `tauri build --bundles msi`)
+
+**Validation command:**
+
+```bash
+npm run preflight:tauri
+```
 
 ---
 
@@ -219,6 +279,19 @@ See [references/build-pipeline.md](./references/build-pipeline.md) for all build
 
 ---
 
+## Known Issues (Repo Reality)
+
+These are known failure modes observed in this repository and should be checked early.
+
+| Issue | Symptom | Resolution |
+|---|---|---|
+| Partial `src-tauri` scaffold | `tauri build` cannot recognize project (`tauri.conf` / Cargo missing) | Recreate required scaffold files and re-run preflight test |
+| Invalid icon source format | `Error Can't read and decode source image` / missing `icon.ico` | Generate icons from a valid raster source (PNG), ensure `icons/icon.ico` exists |
+| Express 5 wildcard route caveat | `Missing parameter name at index 1: *` from `path-to-regexp` | Use middleware fallback (`app.use`) instead of brittle `app.get('*')` |
+| `pkg` + ESM warnings | `import.meta` bytecode warning during `build:proxy` | Prefer CJS-compatible proxy entry for `pkg` examples or document warning expectations |
+
+---
+
 ## Quick Reference — Minimal File Tree
 
 ```
@@ -298,8 +371,7 @@ See [references/build-pipeline.md](./references/build-pipeline.md) for the full 
 
 | File | Contents |
 |------|----------|
-| [references/frontend-scaffolding.md](./references/frontend-scaffolding.md) | Vite, Tailwind 4, TypeScript, Vitest, ESLint — install commands and config templates |
-| [references/proxy-server-template.md](./references/proxy-server-template.md) | Express proxy code, Vite dev proxy config, env variable reference |
-| [references/tauri-config-templates.md](./references/tauri-config-templates.md) | `tauri.conf.json`, `Cargo.toml`, `main.rs` launcher, resource preparation script |
-| [references/build-pipeline.md](./references/build-pipeline.md) | Build scripts, full sequence diagram, output locations, verification commands |
-````
+| [references/frontend-scaffolding.md](./references/frontend-scaffolding.md) | Frontend setup examples and config templates that implement the standards in this skill |
+| [references/proxy-server-template.md](./references/proxy-server-template.md) | Proxy/server examples (routes, env contract, dev proxy) matching this skill's concepts |
+| [references/tauri-config-templates.md](./references/tauri-config-templates.md) | Concrete Tauri file templates (`tauri.conf.json`, `Cargo.toml`, `main.rs`) following the rules above |
+| [references/build-pipeline.md](./references/build-pipeline.md) | End-to-end pipeline examples, artifact paths, and verification commands for this standard flow |

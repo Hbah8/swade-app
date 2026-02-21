@@ -1,0 +1,49 @@
+{
+  "build": {
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
+    "devPath": "http://localhost:5173",
+    "distDir": "../dist"
+  },
+  "package": {
+    "productName": "SWADE App",
+    "version": "0.7.1"
+  },
+  "tauri": {
+    "allowlist": {
+      "shell": {
+        "open": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "targets": [
+        "msi"
+      ],
+      "identifier": "com.swade.app",
+      "icon": [
+        "icons/icon.ico",
+        "icons/icon.png"
+      ],
+      "resources": [
+        "resources/proxy/proxy.exe",
+        "resources/web"
+      ],
+      "windows": {
+        "wix": {
+          "language": "en-US"
+        }
+      }
+    },
+    "windows": [
+      {
+        "title": "SWADE App Launcher",
+        "width": 480,
+        "height": 320,
+        "resizable": false,
+        "fullscreen": false,
+        "visible": false
+      }
+    ]
+  }
+}

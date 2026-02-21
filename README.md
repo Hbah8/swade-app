@@ -83,14 +83,30 @@ src/
 | `npm run dev:all` | Run frontend + LAN proxy together |
 | `npm run build` | Type-check + production build |
 | `npm run prepare:server` | Initialize local campaign storage for LAN server |
+| `npm run bootstrap:tauri` | Scaffold/repair Tauri MSI contract files from template |
+| `npm run preflight:tauri` | Validate setup (files/scripts/toolchain) before MSI build |
 | `npm run build:proxy` | Build standalone proxy executable for Tauri packaging |
 | `npm run prepare:tauri` | Copy web build into Tauri resources |
-| `npm run build:tauri` | Build MSI via Tauri (requires `src-tauri` init and toolchain) |
+| `npm run build:tauri` | Run preflight + build MSI via Tauri |
 | `npm run lint` | Run ESLint |
 | `npm run preview` | Preview production build |
 | `npm run test` | Run Vitest suite |
 
 By default, the proxy binds to `0.0.0.0` (LAN-visible). Set `ALLOW_LAN=false` before `npm run server` to restrict it to localhost.
+
+## Repo Reality Check (Tauri MSI)
+
+`npm run build:tauri` assumes complete `src-tauri` scaffolding already exists (config, Cargo project, launcher, icons, resources pipeline).
+
+- Standards and concepts: [.github/agents/tauri-installer-setup/SKILL.md](.github/agents/tauri-installer-setup/SKILL.md)
+- Concrete templates/examples: [.github/agents/tauri-installer-setup/references](.github/agents/tauri-installer-setup/references)
+- Preflight validation before MSI build: `npm run test -- scripts/tauri-setup.test.js`
+
+### Operator Checklist
+
+1. `npm run bootstrap:tauri`
+2. `npm run preflight:tauri`
+3. `npm run build:tauri`
 
 ## License
 

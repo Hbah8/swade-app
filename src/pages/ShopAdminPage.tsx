@@ -1,10 +1,24 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { parseEquipmentCatalog } from '@/services/shopService';
 import { useShopStore } from '@/store/shopStore';
 
+export async function openPlayerView(
+  syncToServer: () => Promise<boolean>,
+  navigate: (to: string) => void,
+  locationId: string,
+): Promise<void> {
+  const didSync = await syncToServer();
+  if (!didSync) {
+    return;
+  }
+
+  navigate(`/shop/${locationId}`);
+}
+
 export function ShopAdminPage() {
+  const navigate = useNavigate();
   const {
     campaign,
     syncError,
@@ -108,12 +122,14 @@ export function ShopAdminPage() {
         <section key={location.id} className="space-y-3 rounded-lg border border-swade-surface-light bg-swade-surface p-4">
           <div className="flex items-center justify-between gap-3">
             <h3 className="text-sm font-semibold text-swade-gold-light">{location.name}</h3>
-            <Link
-              to={`/shop/${location.id}`}
+            <button
+              type="button"
+              disabled={isSyncing}
+              onClick={() => void openPlayerView(syncToServer, navigate, location.id)}
               className="rounded-lg border border-swade-surface-light px-3 py-1 text-xs text-swade-text"
             >
               Player View
-            </Link>
+            </button>
           </div>
 
           <label className="block text-xs text-swade-text-muted">

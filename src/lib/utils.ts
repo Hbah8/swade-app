@@ -36,3 +36,19 @@ export function lowerDie(die: DieType): DieType {
 export function calcAttributePointsSpent(attributes: Record<string, DieType>): number {
   return Object.values(attributes).reduce((sum, die) => sum + dieToIndex(die), 0);
 }
+
+export function createId(cryptoApi: Crypto | undefined = globalThis.crypto): string {
+  if (cryptoApi?.randomUUID) {
+    return cryptoApi.randomUUID();
+  }
+
+  if (cryptoApi?.getRandomValues) {
+    const bytes = new Uint8Array(16);
+    cryptoApi.getRandomValues(bytes);
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  const randomPart = Math.random().toString(16).slice(2);
+  const timePart = Date.now().toString(16);
+  return `${timePart}-${randomPart}`;
+}

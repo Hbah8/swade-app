@@ -2,6 +2,9 @@
 
 Character generator and rules reference SPA for **Savage Worlds Adventure Edition**.
 
+## Core Principles
+- Do not spam with similar commands
+
 ## Architecture
 
 Pure client-side React 19 + TypeScript SPA — no backend. State via Zustand with `localStorage` persistence (`sw-character-storage` key).

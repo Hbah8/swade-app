@@ -3,13 +3,13 @@ import { persist } from 'zustand/middleware';
 import type { SWCharacter, DieType, Edge, Hindrance, Skill, AttributeName } from '@/models/character';
 
 import { getInitialCoreSkills } from '@/data/skills';
-import { dieToIndex, dieToNumber, raiseDie, lowerDie } from '@/lib/utils';
+import { createId, dieToIndex, dieToNumber, raiseDie, lowerDie } from '@/lib/utils';
 
 // ── Default character ───────────────────────────────────────
 
 function createDefaultCharacter(): SWCharacter {
   return {
-    id: crypto.randomUUID(),
+    id: createId(),
     name: '',
     concept: '',
     race: 'Human',

@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.1 - 2026-02-22
+
+- Fixed LAN accessibility defaults: frontend dev server now exposes network host and proxy defaults to LAN-enabled binding.
+- Fixed iOS player view blank-screen issue caused by unsupported `crypto.randomUUID` on older WebKit by adding resilient ID generation fallback.
+- Added regression tests for proxy runtime LAN host behavior and browser-compatible ID generation fallback paths.
+
 ## v0.7.0 - 2026-02-21
 
 - Added location-based shop module with per-location inventory and pricing rules.

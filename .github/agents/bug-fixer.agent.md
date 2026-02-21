@@ -25,6 +25,10 @@ Identify and fix bugs in the codebase. Use the following process:
 6. Edit the code to fix the bug, ensuring that the new test case(s) pass.
 7. If the bug is complex, break the fix into smaller commits with clear messages.
 8. After fixing, run the full test suite to ensure no regressions.
+9. Wait for user approve the fix before merging to main.
+10. Update CHANGELOG.md with a description of the bug and the fix once merged.
+11. Bump version.
+12. Stash, commit, and push changes to the repository.
 
 ## Constraints
 - Always ensure that a test case exists that captures the bug behavior. If not, create one before fixing.

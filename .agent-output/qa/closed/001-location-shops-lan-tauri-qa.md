@@ -2,7 +2,7 @@
 ID: 1
 Origin: 1
 UUID: a4c9b2e1
-Status: Committed
+Status: Released
 ---
 
 # QA Report: 001 — Location-Based Shops & Pricing (LAN/Tauri Backend-First)

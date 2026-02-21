@@ -96,8 +96,8 @@ So that I can quickly reference item costs during sessions without searching thr
 |---------|-------|------------|----------|
 | 001 | Location-Based Equipment System | Approved | ✓ |
 
-**Release Status**: 1 of 1 plans committed  
-**Ready for Release**: Yes  
+**Release Status**: 1 of 1 plans committed (Released)
+**Ready for Release**: Released
 **Blocking Items**: Plan not yet created
 
 ### Previous Releases

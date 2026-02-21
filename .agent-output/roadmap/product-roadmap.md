@@ -94,10 +94,10 @@ So that I can quickly reference item costs during sessions without searching thr
 
 | Plan ID | Title | UAT Status | Committed |
 |---------|-------|------------|----------|
-| TBD | Location-Based Equipment System | Pending | ✗ |
+| 001 | Location-Based Equipment System | Approved | ✓ |
 
-**Release Status**: 0 of 1 plans committed  
-**Ready for Release**: No  
+**Release Status**: 1 of 1 plans committed  
+**Ready for Release**: Yes  
 **Blocking Items**: Plan not yet created
 
 ### Previous Releases

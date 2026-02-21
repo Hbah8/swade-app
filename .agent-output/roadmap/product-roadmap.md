@@ -1,6 +1,6 @@
 # SWADE App - Product Roadmap
 
-**Last Updated**: 2026-02-21 16:30  
+**Last Updated**: 2026-02-21 22:35  
 **Roadmap Owner**: roadmap agent  
 **Strategic Vision**: Comprehensive digital toolset for Savage Worlds GMs and players, eliminating preparation overhead and enabling seamless in-session reference and management.
 
@@ -19,7 +19,9 @@
 | Date & Time | Change | Rationale |
 |-------------|--------|-----------|
 | 2026-02-21 14:00 | Initial roadmap created with v0.7.0 release | User requested equipment/shop management functionality to reduce GM prep time and enable in-session item management |
-| 2026-02-21 14:00 | Added Epic 0.7.1: Location-Based Equipment & Pricing System | GM currently uses Excel tables; significant friction during sessions and prep || 2026-02-21 16:30 | Updated Epic 0.7.1 constraints: LAN/Tauri backend-first | Architectural assessment confirmed LAN proxy + Tauri packaging is viable and preferred for user's LAN-first usage |
+| 2026-02-21 14:00 | Added Epic 0.7.1: Location-Based Equipment & Pricing System | GM currently uses Excel tables; significant friction during sessions and prep |
+| 2026-02-21 16:30 | Updated Epic 0.7.1 constraints: LAN/Tauri backend-first | Architectural assessment confirmed LAN proxy + Tauri packaging is viable and preferred for user's LAN-first usage |
+| 2026-02-21 22:35 | Released v0.7.0 with Plan [001] Location-Based Equipment System | Plan 001 UAT approved, committed locally, tagged as v0.7.0, and pushed to origin. Epic 0.7.1 objectives delivered. |
 ---
 
 ## Release v0.7.0 - GM Session Tools
@@ -30,7 +32,7 @@
 ### Epic 0.7.1: Location-Based Equipment & Pricing System
 
 **Priority**: P1  
-**Status**: Planned
+**Status**: Delivered
 
 **User Story**:  
 As a Savage Worlds GM,  
@@ -50,16 +52,16 @@ So that I can quickly reference item costs during sessions without searching thr
 - Requires Tauri build toolchain (Rust, pkg, WiX) for MSI packaging
 
 **Acceptance Criteria** (outcome-focused):
-- [ ] GM can define locations/settlements with unique shop inventories
-- [ ] GM can configure equipment availability per location (which items are sold)
-- [ ] GM can set prices using either percentage modifier (e.g., "+20% frontier markup") or manual override
-- [ ] GM can import equipment catalogs from JSON files (standard + custom items)
-- [ ] GM can create/edit custom equipment items
-- [ ] Players and GM can view filtered equipment catalog for a specific location via LAN
-- [ ] System generates short shareable URLs for location-specific shop views (LAN/Tauri mode)
-- [ ] Local proxy server serves shop data and SPA with fallback for deep links
-- [ ] Solution is packagable via Tauri (proxy.exe + headless launcher + MSI)
-- [ ] UI integrates seamlessly with existing character builder (accessible via navigation)
+- [x] GM can define locations/settlements with unique shop inventories
+- [x] GM can configure equipment availability per location (which items are sold)
+- [x] GM can set prices using either percentage modifier (e.g., "+20% frontier markup") or manual override
+- [x] GM can import equipment catalogs from JSON files (standard + custom items)
+- [x] GM can create/edit custom equipment items
+- [x] Players and GM can view filtered equipment catalog for a specific location via LAN
+- [x] System generates short shareable URLs for location-specific shop views (LAN/Tauri mode)
+- [x] Local proxy server serves shop data and SPA with fallback for deep links
+- [x] Solution is packagable via Tauri (proxy.exe + headless launcher + MSI)
+- [x] UI integrates seamlessly with existing character builder (accessible via navigation)
 
 **Constraints**:
 - LAN/Tauri deployment profile: local proxy server on GM device, players connect via LAN
@@ -75,6 +77,7 @@ So that I can quickly reference item costs during sessions without searching thr
 - 2026-02-21 15:00: Architectural assessment completed; LAN/Tauri backend approach approved
 - 2026-02-21 16:30: Epic constraints updated to reflect LAN/Tauri deployment profile
 - 2026-02-21 16:30: Awaiting plan creation/revision by planner agent
+- 2026-02-21 22:35: Epic delivered via Plan [001]. All acceptance criteria met. Released as v0.7.0.
 
 **Notes for Architect & Planner**:
 - **Architecture docs**: See `.agent-output/architecture/system-architecture.md` (ADR-003) and `001-location-shops-architecture-findings.md`
@@ -90,21 +93,22 @@ So that I can quickly reference item costs during sessions without searching thr
 
 ## Active Release Tracker
 
-**Current Working Release**: v0.7.0
+**Current Working Release**: None (awaiting next epic planning)
 
 | Plan ID | Title | UAT Status | Committed |
 |---------|-------|------------|----------|
-| 001 | Location-Based Equipment System | Approved | ✓ |
+| - | No plans in progress | - | - |
 
-**Release Status**: 1 of 1 plans committed (Released)
-**Ready for Release**: Released
-**Blocking Items**: Plan not yet created
+**Release Status**: No active release
+**Ready for Release**: N/A
+**Blocking Items**: None
 
 ### Previous Releases
 
 | Version | Date | Plans Included | Status |
 |---------|------|----------------|--------|
-| v0.6.x | N/A | Character creation, rules reference | Currently in production |
+| v0.7.0 | 2026-02-21 | [001] Location-Based Equipment System (LAN/Tauri) | Released |
+| v0.6.x | N/A | Character creation, rules reference | Base version |
 
 ---
 

@@ -3,6 +3,14 @@ import { useParams } from 'react-router-dom';
 
 import type { LocationShopView } from '@/models/shop';
 
+export function getShopEmptyStateMessage(view: LocationShopView): string | null {
+  if (view.items.length === 0) {
+    return 'No items are currently available in this shop.';
+  }
+
+  return null;
+}
+
 export function ShopViewPage() {
   const { locationId } = useParams<{ locationId: string }>();
   const [view, setView] = useState<LocationShopView | null>(null);
@@ -53,10 +61,14 @@ export function ShopViewPage() {
     return <p className="text-sm text-swade-text-muted">Loading shop...</p>;
   }
 
+  const emptyStateMessage = getShopEmptyStateMessage(view);
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-swade-gold">{view.locationName} Shop</h1>
       <p className="text-sm text-swade-text-muted">Read-only player view.</p>
+
+      {emptyStateMessage && <p className="text-sm text-swade-text-muted">{emptyStateMessage}</p>}
 
       <div className="space-y-2">
         {view.items.map((item) => (

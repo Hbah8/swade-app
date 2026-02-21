@@ -56,11 +56,13 @@ export function createApp(options = {}) {
       return;
     }
 
-    const itemSet = new Set(Array.isArray(location.availableItemIds) ? location.availableItemIds : []);
+    const availableItemIds = Array.isArray(location.availableItemIds) ? location.availableItemIds : [];
+    const itemSet = new Set(availableItemIds);
+    const showAllItems = availableItemIds.length === 0;
     const manualPrices = location.manualPrices && typeof location.manualPrices === 'object' ? location.manualPrices : {};
 
     const items = campaign.catalog
-      .filter((catalogItem) => itemSet.has(catalogItem.id))
+      .filter((catalogItem) => showAllItems || itemSet.has(catalogItem.id))
       .map((catalogItem) => {
         const manualPrice = typeof manualPrices[catalogItem.id] === 'number' ? manualPrices[catalogItem.id] : undefined;
         const percentMarkup = Number(location.percentMarkup ?? 0);

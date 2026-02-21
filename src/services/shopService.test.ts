@@ -50,6 +50,27 @@ describe('shopService', () => {
     ])
   })
 
+  it('shows full catalog when availableItemIds is empty', () => {
+    const view = buildLocationShopView({
+      location: {
+        id: 'riverfall',
+        name: 'Riverfall',
+        availableItemIds: [],
+        percentMarkup: 10,
+        manualPrices: {},
+      },
+      catalog: [
+        { id: 'rope', name: 'Rope', basePrice: 10, weight: 1 },
+        { id: 'torch', name: 'Torch', basePrice: 5, weight: 0.5 },
+      ],
+    })
+
+    expect(view.items).toEqual([
+      { id: 'rope', name: 'Rope', basePrice: 10, finalPrice: 11, weight: 1 },
+      { id: 'torch', name: 'Torch', basePrice: 5, finalPrice: 6, weight: 0.5 },
+    ])
+  })
+
   it('parses and validates a JSON equipment catalog payload', () => {
     const parsed = parseEquipmentCatalog(
       JSON.stringify({

@@ -57,3 +57,54 @@ describe('proxy static SPA fallback', () => {
     });
   });
 });
+
+describe('shop api', () => {
+  it('returns full catalog when location availableItemIds is empty', async () => {
+    const campaign = {
+      schemaVersion: '1.0',
+      catalog: [
+        { id: 'rope', name: 'Rope', basePrice: 10, weight: 1 },
+        { id: 'torch', name: 'Torch', basePrice: 5, weight: 0.5 },
+      ],
+      locations: [
+        {
+          id: 'riverfall',
+          name: 'Riverfall',
+          availableItemIds: [],
+          percentMarkup: 10,
+          manualPrices: {},
+        },
+      ],
+    };
+
+    const app = createApp({
+      readCampaign: async () => campaign,
+      writeCampaign: async () => undefined,
+    });
+
+    const server = await new Promise((resolve) => {
+      const running = app.listen(0, '127.0.0.1', () => resolve(running));
+    });
+
+    const address = server.address();
+    if (!address || typeof address === 'string') {
+      throw new Error('Could not determine server address');
+    }
+
+    const response = await fetch(`http://127.0.0.1:${address.port}/api/shop/riverfall`);
+    const data = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(data.items).toHaveLength(2);
+
+    await new Promise((resolve, reject) => {
+      server.close((error) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve(undefined);
+      });
+    });
+  });
+});

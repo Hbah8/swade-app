@@ -31,9 +31,11 @@ export function calculateLocationPrice(input: LocationPriceInput): number {
 }
 
 export function buildLocationShopView(input: BuildLocationShopViewInput): LocationShopView {
-  const visibleItemIds = new Set(input.location.availableItemIds);
+  const availableItemIds = Array.isArray(input.location.availableItemIds) ? input.location.availableItemIds : [];
+  const showAllItems = availableItemIds.length === 0;
+  const visibleItemIds = new Set(availableItemIds);
   const items = input.catalog
-    .filter((item) => visibleItemIds.has(item.id))
+    .filter((item) => showAllItems || visibleItemIds.has(item.id))
     .map((item) => ({
       id: item.id,
       name: item.name,

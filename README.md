@@ -19,6 +19,12 @@ Character generator and interactive rules reference for **Savage Worlds Adventur
   - Step-by-step examples
   - Cross-linked related rules
 
+- **Location Shops (LAN-ready)** — Manage location-specific item availability and prices
+  - Import equipment catalog from JSON
+  - Configure per-location markup and manual price overrides
+  - Share read-only player shop views by location route (`/shop/:locationId`)
+  - Sync campaign shop data with local LAN proxy server
+
 ## Tech Stack
 
 | Technology | Purpose |
@@ -41,6 +47,9 @@ npm install
 
 # Start dev server
 npm run dev
+
+# Start frontend + LAN proxy together
+npm run dev:all
 
 # Build for production
 npm run build
@@ -70,9 +79,16 @@ src/
 | Command | Description |
 |---|---|
 | `npm run dev` | Start development server (port 5173) |
+| `npm run server` | Start local LAN proxy server (port 5174 by default) |
+| `npm run dev:all` | Run frontend + LAN proxy together |
 | `npm run build` | Type-check + production build |
+| `npm run prepare:server` | Initialize local campaign storage for LAN server |
+| `npm run build:proxy` | Build standalone proxy executable for Tauri packaging |
+| `npm run prepare:tauri` | Copy web build into Tauri resources |
+| `npm run build:tauri` | Build MSI via Tauri (requires `src-tauri` init and toolchain) |
 | `npm run lint` | Run ESLint |
 | `npm run preview` | Preview production build |
+| `npm run test` | Run Vitest suite |
 
 ## License
 

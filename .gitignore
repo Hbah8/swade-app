@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# LAN Proxy Data
+server/data/*.json
+!server/data/.gitkeep

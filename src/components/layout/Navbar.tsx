@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { BookOpen, UserPlus, Home } from 'lucide-react';
+import { BookOpen, UserPlus, Home, Store } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home', icon: Home },
   { to: '/character', label: 'Character Builder', icon: UserPlus },
   { to: '/rules', label: 'Rules Reference', icon: BookOpen },
+  { to: '/shops', label: 'Shop Manager', icon: Store },
 ] as const;
 
 export function Navbar() {

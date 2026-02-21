@@ -55,7 +55,8 @@ See `.github/instructions/` for detailed guidance:
 
 | File | Content |
 |---|---|
-| `game-rules.instructions.md` | Skill costs, validation limits, derived stats, edge requirements |
+| `swade-mastery skill` | Complete SWADE rules: dice mechanics, character creation, combat, conditions, size system, bennies, terminology |
+| `game-rules.instructions.md` | Code-specific rule mappings: skill costs, validation, derived stats, edge requirements |
 | `styling.instructions.md` | Tailwind theme tokens, `cn()`, common UI patterns |
 | `dev-commands.instructions.md` | `npm run` scripts, import alias convention |
 | `common-tasks.instructions.md` | Recipes for adding edges, pages, modifying calculations, testing |

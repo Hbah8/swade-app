@@ -1,0 +1,49 @@
+```mermaid
+flowchart TB
+  subgraph Browser[Browser Runtime (Current)]
+    UI[React UI\nPages + Components]
+    Router[React Router v7\nBrowserRouter]
+    Store[Zustand Stores\n- Character (sw-character-storage)\n- (Planned) Campaign/Shop]
+    Data[Static Data\nsrc/data/*]
+    Models[Domain Types\nsrc/models/*]
+    Services[Pure Services\nvalidation/export]
+    LS[(localStorage)]
+
+    Router --> UI
+    UI --> Store
+    UI --> Data
+    UI --> Services
+    Store --> LS
+    Store --> Models
+    Services --> Models
+  end
+
+  subgraph Share[Sharing Profiles]
+    LinkA[Share Link (Web SPA)\n(secondary/fallback)]
+    Package[Campaign Package\n(compressed JSON payload)]
+    LinkA --> Package
+
+    LinkB[Share Link (LAN/Tauri)\n(primary for Epic 0.7.1)]
+    ServerURL[Short URL\nhttp://GM-IP:PORT/shop/...]
+    LinkB --> ServerURL
+  end
+
+  %% Optional server-enabled profile
+  subgraph LocalServer[Optional: Local Proxy Server (LAN/Tauri)]
+    Proxy[proxy.exe / local server\nserves SPA + /api]
+    ProxyLS[(local persistence\nfile/db or memory)]
+    Proxy --> ProxyLS
+  end
+
+  LinkA -.opens.-> Router
+  Package -.decoded by.-> UI
+
+  ServerURL -.opens.-> Proxy
+  Proxy -.serves HTML/JS.-> UI
+
+  %% Key constraint callout
+  Note:::noteClass
+  classDef noteClass fill:#fff,stroke:#999,stroke-dasharray: 3 3,color:#333;
+  Note["Constraint (Web SPA): players cannot read\nGM localStorage — share requires\nURL payload or import/export"]
+  Note --- Share
+```

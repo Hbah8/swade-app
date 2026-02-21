@@ -6,6 +6,7 @@ import path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { createApp } from './appFactory.js';
+import { resolveRuntimeConfig } from './runtimeConfig.js';
 
 const cleanupPaths = [];
 
@@ -55,6 +56,28 @@ describe('proxy static SPA fallback', () => {
         resolve(undefined);
       });
     });
+  });
+});
+
+describe('runtime config', () => {
+  it('binds to LAN by default', () => {
+    const config = resolveRuntimeConfig({
+      env: {},
+      baseDir: process.cwd(),
+    });
+
+    expect(config.allowLan).toBe(true);
+    expect(config.host).toBe('0.0.0.0');
+  });
+
+  it('supports explicit localhost-only mode', () => {
+    const config = resolveRuntimeConfig({
+      env: { ALLOW_LAN: 'false' },
+      baseDir: process.cwd(),
+    });
+
+    expect(config.allowLan).toBe(false);
+    expect(config.host).toBe('127.0.0.1');
   });
 });
 

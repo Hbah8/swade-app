@@ -90,6 +90,8 @@ src/
 | `npm run preview` | Preview production build |
 | `npm run test` | Run Vitest suite |
 
+By default, the proxy binds to `0.0.0.0` (LAN-visible). Set `ALLOW_LAN=false` before `npm run server` to restrict it to localhost.
+
 ## License
 
 Fan-made tool for Savage Worlds Adventure Edition. Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group.

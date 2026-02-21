@@ -2,17 +2,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createApp } from './appFactory.js';
+import { resolveRuntimeConfig } from './runtimeConfig.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const allowLan = process.env.ALLOW_LAN === 'true';
-const host = allowLan ? '0.0.0.0' : '127.0.0.1';
-const port = Number(process.env.PROXY_PORT ?? process.env.PORT ?? 5174);
-const serveStatic = process.env.SERVE_STATIC === 'true';
-const staticDir = process.env.STATIC_DIR
-  ? path.resolve(process.env.STATIC_DIR)
-  : path.resolve(__dirname, '..', 'dist');
+const { allowLan, host, port, serveStatic, staticDir } = resolveRuntimeConfig({
+  env: process.env,
+  baseDir: __dirname,
+});
 
 const app = createApp({ serveStatic, staticDir });
 

@@ -1,0 +1,269 @@
+{
+  "schemaVersion": "1.0",
+  "items": [
+    {
+      "id": "revolver-police-38",
+      "name": "Полицейский револьвер (.38)",
+      "basePrice": 150,
+      "weight": 1,
+      "category": "Револьвер",
+      "notes": "Дистанция 10/20/40, Урон 2d6, СКС 1, Боезапас 6. Надёжен, прост"
+    },
+    {
+      "id": "pistol-colt-1911",
+      "name": "Кольт 1911 (.45)",
+      "basePrice": 200,
+      "weight": 1.5,
+      "category": "Пистолет",
+      "notes": "Дистанция 12/24/48, Урон 2d6+1, ББ 1, СКС 1, Боезапас 7. Классика мафии"
+    },
+    {
+      "id": "pistol-glock-9mm",
+      "name": "Глок (9 мм)",
+      "basePrice": 250,
+      "weight": 1,
+      "category": "Пистолет",
+      "notes": "Дистанция 12/24/48, Урон 2d6, ББ 1, СКС 1, Боезапас 17. Большой магазин"
+    },
+    {
+      "id": "revolver-sw-357",
+      "name": "Смит-Вессон (.357)",
+      "basePrice": 250,
+      "weight": 1.5,
+      "category": "Револьвер",
+      "notes": "Дистанция 12/24/48, Урон 2d6+1, ББ 1, СКС 1, Боезапас 6. Мощный"
+    },
+    {
+      "id": "pistol-desert-eagle-50",
+      "name": "Пустынный орёл (.50)",
+      "basePrice": 300,
+      "weight": 2,
+      "category": "Пистолет",
+      "notes": "Дистанция 15/30/60, Урон 2d8, ББ 2, СКС 1, Боезапас 7. Тяжёлый"
+    },
+    {
+      "id": "smg-mp5-9mm",
+      "name": "MP5 (9 мм)",
+      "basePrice": 400,
+      "weight": 3,
+      "category": "Пистолет-пулемёт",
+      "notes": "Дистанция 12/24/48, Урон 2d6, ББ 1, СКС 3, Боезапас 30. Контроль"
+    },
+    {
+      "id": "smg-uzi-9mm",
+      "name": "Узи (9 мм)",
+      "basePrice": 400,
+      "weight": 3,
+      "category": "Пистолет-пулемёт",
+      "notes": "Дистанция 12/24/48, Урон 2d6, ББ 1, СКС 3, Боезапас 32. Компактный"
+    },
+    {
+      "id": "smg-tommy-gun-45",
+      "name": "Томми-ган (.45)",
+      "basePrice": 400,
+      "weight": 5,
+      "category": "Пистолет-пулемёт",
+      "notes": "Дистанция 12/24/48, Урон 2d6+1, ББ 1, СКС 3, Боезапас 20. Стиль эпохи"
+    },
+    {
+      "id": "shotgun-pump",
+      "name": "Помповое ружьё",
+      "basePrice": 150,
+      "weight": 4,
+      "category": "Дробовик",
+      "notes": "Дистанция 12/24/48, Урон 1–3d6, СКС 1, Боезапас 6. Разброс"
+    },
+    {
+      "id": "rifle-hunting-308",
+      "name": "Охотничья (.308)",
+      "basePrice": 350,
+      "weight": 4,
+      "category": "Винтовка",
+      "notes": "Дистанция 24/48/96, Урон 2d8, ББ 2, СКС 1, Боезапас 5. Точность"
+    },
+    {
+      "id": "rifle-ak47",
+      "name": "АК-47 (7.62 мм)",
+      "basePrice": 450,
+      "weight": 4.5,
+      "category": "Штурмовая винтовка",
+      "notes": "Дистанция 24/48/96, Урон 2d8+1, ББ 2, СКС 3, Боезапас 30. Военное"
+    },
+    {
+      "id": "melee-garrote",
+      "name": "Гаррота",
+      "basePrice": 10,
+      "weight": 0.1,
+      "category": "Удавка",
+      "notes": "Захват +d4. Требует захвата, 2 руки. Фортепианная струна добавляет d4 к урону от Силы"
+    },
+    {
+      "id": "melee-machete",
+      "name": "Мачете",
+      "basePrice": 25,
+      "weight": 1,
+      "category": "Холодное оружие",
+      "notes": "Урон Сила+d6, ББ 1. Простое. Эффективно для рубки"
+    },
+    {
+      "id": "melee-sai-pair",
+      "name": "Сай (пара)",
+      "basePrice": 20,
+      "weight": 1,
+      "category": "Холодное оружие",
+      "notes": "Урон Сила+d4, Защита +1. Экзотическое оружие для перехвата и обезоруживания"
+    },
+    {
+      "id": "melee-brass-knuckles",
+      "name": "Кастет",
+      "basePrice": 20,
+      "weight": 0.2,
+      "category": "Ударное оружие",
+      "notes": "Урон Сила+d4. Не считается оружием"
+    },
+    {
+      "id": "melee-switchblade",
+      "name": "Выкидной нож",
+      "basePrice": 10,
+      "weight": 0.3,
+      "category": "Нож",
+      "notes": "Урон Сила+d4. –2 к обнаружению"
+    },
+    {
+      "id": "improvised-light",
+      "name": "Лёгкое импровизированное (кружка)",
+      "basePrice": 5,
+      "weight": 0.5,
+      "category": "Импровизированное",
+      "notes": "Урон Сила+d4. Разовое"
+    },
+    {
+      "id": "improvised-medium",
+      "name": "Среднее импровизированное (бита)",
+      "basePrice": 10,
+      "weight": 1,
+      "category": "Импровизированное",
+      "notes": "Урон Сила+d6"
+    },
+    {
+      "id": "improvised-heavy",
+      "name": "Тяжёлое импровизированное (стул)",
+      "basePrice": 20,
+      "weight": 3,
+      "category": "Импровизированное",
+      "notes": "Урон Сила+d8"
+    },
+    {
+      "id": "mod-silencer",
+      "name": "Глушитель",
+      "basePrice": 100,
+      "weight": 0.3,
+      "category": "Модификатор оружия",
+      "notes": "–2 к Вниманию (услышать выстрел)"
+    },
+    {
+      "id": "gear-instrument-case",
+      "name": "Футляр инструмента",
+      "basePrice": 50,
+      "weight": 2,
+      "category": "Маскировка",
+      "notes": "–2 к обнаружению оружия"
+    },
+    {
+      "id": "gear-carpet",
+      "name": "Ковёр",
+      "basePrice": 100,
+      "weight": 5,
+      "category": "Утилизация",
+      "notes": "Переноска тел. Классика"
+    },
+    {
+      "id": "gear-safecracking-kit",
+      "name": "Набор для взлома сейфов",
+      "basePrice": 2500,
+      "weight": 10,
+      "category": "Взлом",
+      "notes": "Профессиональный инструмент. Не стартовый"
+    },
+    {
+      "id": "gear-cleaner-kit",
+      "name": "Набор «Чистильщика»",
+      "basePrice": 100,
+      "weight": 3,
+      "category": "Уборка",
+      "notes": "Удаление следов после дел"
+    },
+    {
+      "id": "gear-marked-cards",
+      "name": "Краплёные карты",
+      "basePrice": 20,
+      "weight": 0.1,
+      "category": "Обман",
+      "notes": "+2 к Азартным играм"
+    },
+    {
+      "id": "gear-police-scanner",
+      "name": "Полицейский сканер",
+      "basePrice": 50,
+      "weight": 0.5,
+      "category": "Разведка",
+      "notes": "Слушать копов"
+    },
+    {
+      "id": "gear-bug",
+      "name": "Жучок",
+      "basePrice": 30,
+      "weight": 0.05,
+      "category": "Прослушка",
+      "notes": "12 часов работы. Одноразовый"
+    },
+    {
+      "id": "gear-truth-serum",
+      "name": "Сыворотка правды",
+      "basePrice": 200,
+      "weight": 0.1,
+      "category": "Допрос",
+      "notes": "Нелегально"
+    },
+    {
+      "id": "gear-lockpicks",
+      "name": "Отмычки",
+      "basePrice": 50,
+      "weight": 0.2,
+      "category": "Взлом",
+      "notes": "+1 к Ловкости рук"
+    },
+    {
+      "id": "gear-bolt-cutters",
+      "name": "Болторез",
+      "basePrice": 40,
+      "weight": 3,
+      "category": "Взлом",
+      "notes": "Шумный"
+    },
+    {
+      "id": "gear-handcuffs",
+      "name": "Наручники",
+      "basePrice": 20,
+      "weight": 0.5,
+      "category": "Фиксация",
+      "notes": "Многоразовые"
+    },
+    {
+      "id": "gear-zip-ties",
+      "name": "Пластиковые стяжки",
+      "basePrice": 5,
+      "weight": 0.1,
+      "category": "Фиксация",
+      "notes": "Одноразовые"
+    },
+    {
+      "id": "gear-duct-tape",
+      "name": "Скотч",
+      "basePrice": 5,
+      "weight": 0.3,
+      "category": "Фиксация",
+      "notes": "Универсальный инструмент"
+    }
+  ]
+}

@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.7.3 - 2026-02-22
+
+- Fixed runtime proxy mismatch: `server/proxy.cjs` now uses shared server app factory logic instead of stale duplicated route code.
+- Fixed player shop API output so `/api/shop/:locationId` preserves optional `category` and `notes` fields in live runtime responses.
+- Fixed player shop UI behavior where category selector had no options and notes column appeared empty due to missing API fields.
+- Added regression test for runtime proxy path to ensure `category` and `notes` are retained in shop responses.
+
 ## v0.7.2 - 2026-02-22
 
 - Reworked player shop view (`/shop/:locationId`) to use a shadcn-based data table powered by TanStack Table.

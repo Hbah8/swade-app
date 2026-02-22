@@ -22,6 +22,7 @@
 | 2026-02-21 14:00 | Added Epic 0.7.1: Location-Based Equipment & Pricing System | GM currently uses Excel tables; significant friction during sessions and prep |
 | 2026-02-21 16:30 | Updated Epic 0.7.1 constraints: LAN/Tauri backend-first | Architectural assessment confirmed LAN proxy + Tauri packaging is viable and preferred for user's LAN-first usage |
 | 2026-02-21 22:35 | Released v0.7.0 with Plan [001] Location-Based Equipment System | Plan 001 UAT approved, committed locally, tagged as v0.7.0, and pushed to origin. Epic 0.7.1 objectives delivered. |
+| 2026-02-22 18:00 | Released v0.7.2 with Plan [002] Player Shop View Data Table | Plan 002 UAT approved, committed locally, tagged as v0.7.2, and pushed to origin. |
 ---
 
 ## Release v0.7.0 - GM Session Tools
@@ -97,7 +98,7 @@ So that I can quickly reference item costs during sessions without searching thr
 
 | Plan ID | Title | UAT Status | Committed |
 |---------|-------|------------|----------|
-| 002 | Player Shop View: shadcn Data Table + Filters (Mobile-Friendly) | Pending | No |
+| 002 | Player Shop View: shadcn Data Table + Filters (Mobile-Friendly) | Released | Yes |
 
 **Release Status**: Planning completed, implementation in progress
 **Ready for Release**: No

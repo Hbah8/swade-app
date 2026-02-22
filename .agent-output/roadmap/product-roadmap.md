@@ -1,6 +1,6 @@
 # SWADE App - Product Roadmap
 
-**Last Updated**: 2026-02-21 22:35  
+**Last Updated**: 2026-02-23 12:10  
 **Roadmap Owner**: roadmap agent  
 **Strategic Vision**: Comprehensive digital toolset for Savage Worlds GMs and players, eliminating preparation overhead and enabling seamless in-session reference and management.
 
@@ -23,6 +23,7 @@
 | 2026-02-21 16:30 | Updated Epic 0.7.1 constraints: LAN/Tauri backend-first | Architectural assessment confirmed LAN proxy + Tauri packaging is viable and preferred for user's LAN-first usage |
 | 2026-02-21 22:35 | Released v0.7.0 with Plan [001] Location-Based Equipment System | Plan 001 UAT approved, committed locally, tagged as v0.7.0, and pushed to origin. Epic 0.7.1 objectives delivered. |
 | 2026-02-22 18:00 | Released v0.7.2 with Plan [002] Player Shop View Data Table | Plan 002 UAT approved, committed locally, tagged as v0.7.2, and pushed to origin. |
+| 2026-02-23 12:10 | Released v0.8.0 with Plan [003] Setting-Scoped Catalog & Rule-Based Shops | Plan 003 UAT approved, committed locally, tagged as v0.8.0, and pushed to origin. Epic 0.8.1 objectives delivered. |
 ---
 
 ## Release v0.7.0 - GM Session Tools
@@ -92,6 +93,60 @@ So that I can quickly reference item costs during sessions without searching thr
 
 ---
 
+## Release v0.8.0 - Setting-Scoped Catalog & Rules Engine
+
+**Target Date**: 2026-02-23  
+**Strategic Goal**: Transform shop management from JSON-first workflow to setting-scoped catalog with rule-based shop definitions, enabling faster GM workflow and cleaner UX.
+
+### Epic 0.8.1: Setting-Scoped Catalog & Rule-Based Shops
+
+**Priority**: P1  
+**Status**: Delivered
+
+**User Story**:  
+As a Savage Worlds GM,  
+I want catalogs and shops to be scoped to a selected setting (built-in sets + custom items + optional JSON import) and define shop inventory via rules (with exceptions),  
+So that shop management is fast, clean, and shareable without relying on raw JSON as the primary UI.
+
+**Business Value**:
+- **Reduces cognitive load**: Setting-scoped catalogs eliminate confusion when managing multiple campaigns
+- **Accelerates shop creation**: Rule-based definitions ("all weapons with medieval tag") replace manual allowlists
+- **Improves data quality**: Built-in starter catalog provides immediate value; custom items via form reduce JSON errors
+- **Preserves flexibility**: JSON import remains available for power users and catalog packs
+- **Maintains player isolation**: Player view remains read-only computed results at `/shop/:locationId`
+
+**Dependencies**:
+- Extends Epic 0.7.1 (Location-Based Equipment System)
+- Requires schema migration from v1.0 to v2.0 (setting-scoped domain)
+- Must preserve backwards compatibility for existing campaigns
+
+**Acceptance Criteria** (outcome-focused):
+- [x] GM can select a setting and manage setting-scoped catalogs
+- [x] GM has access to built-in starter catalog items
+- [x] GM can create custom items via form (name, price, weight, tags, legal status)
+- [x] GM can import catalog packs from JSON (optional workflow)
+- [x] GM can define shop inventory using rules (tag-based, legal status filters)
+- [x] GM can create exceptions to rules (include/exclude specific items)
+- [x] GM can configure pricing profiles per shop
+- [x] Player view remains isolated and read-only at `/shop/:locationId`
+- [x] Schema migration from v1.0 to v2.0 is automatic and deterministic
+- [x] Rollback to v1.0 is supported if needed
+
+**Constraints**:
+- Route MUST remain `/shop/:locationId` (no slug migration)
+- Must use existing design system (shadcn/ui)
+- Preserve LAN/Tauri-first approach (server endpoints remain authoritative)
+- Schema migration must be automatic on first load of v2.0
+- Must handle existing v1.0 data gracefully
+
+**Status Notes**:
+- 2026-02-22: Epic created based on user feedback (JSON-first workflow friction)
+- 2026-02-22: Plan 003 created and critiqued; implementation started
+- 2026-02-23: Code review approved; QA complete; UAT approved
+- 2026-02-23: Epic delivered via Plan [003]. All acceptance criteria met. Released as v0.8.0.
+
+---
+
 ## Active Release Tracker
 
 **Current Working Release**: None (awaiting next planning cycle)
@@ -100,7 +155,7 @@ So that I can quickly reference item costs during sessions without searching thr
 |---------|-------|------------|----------|
 | - | No active plans | - | - |
 
-**Release Status**: v0.7.2 released; no plans currently in progress
+**Release Status**: v0.8.0 released; no plans currently in progress
 **Ready for Release**: N/A
 **Blocking Items**: None
 
@@ -108,6 +163,7 @@ So that I can quickly reference item costs during sessions without searching thr
 
 | Version | Date | Plans Included | Status |
 |---------|------|----------------|--------|
+| v0.8.0 | 2026-02-23 | [003] Setting-Scoped Catalog & Rule-Based Shops | Released |
 | v0.7.2 | 2026-02-22 | [002] Player Shop View Data Table + Filters | Released |
 | v0.7.0 | 2026-02-21 | [001] Location-Based Equipment System (LAN/Tauri) | Released |
 | v0.6.x | N/A | Character creation, rules reference | Base version |

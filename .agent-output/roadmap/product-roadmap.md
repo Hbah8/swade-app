@@ -94,20 +94,21 @@ So that I can quickly reference item costs during sessions without searching thr
 
 ## Active Release Tracker
 
-**Current Working Release**: v0.7.2
+**Current Working Release**: None (awaiting next planning cycle)
 
 | Plan ID | Title | UAT Status | Committed |
 |---------|-------|------------|----------|
-| 002 | Player Shop View: shadcn Data Table + Filters (Mobile-Friendly) | Released | Yes |
+| - | No active plans | - | - |
 
-**Release Status**: Planning completed, implementation in progress
-**Ready for Release**: No
-**Blocking Items**: Pending implementation and QA/UAT for Plan 002
+**Release Status**: v0.7.2 released; no plans currently in progress
+**Ready for Release**: N/A
+**Blocking Items**: None
 
 ### Previous Releases
 
 | Version | Date | Plans Included | Status |
 |---------|------|----------------|--------|
+| v0.7.2 | 2026-02-22 | [002] Player Shop View Data Table + Filters | Released |
 | v0.7.0 | 2026-02-21 | [001] Location-Based Equipment System (LAN/Tauri) | Released |
 | v0.6.x | N/A | Character creation, rules reference | Base version |
 

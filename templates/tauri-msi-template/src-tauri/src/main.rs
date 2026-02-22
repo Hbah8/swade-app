@@ -1,7 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::io::{Read, Write};
-use std::net::{TcpListener, TcpStream};
+use std::net::{TcpListener, TcpStream, UdpSocket};
 use std::process::{Child, Command};
 use std::sync::Mutex;
 use std::thread;
@@ -58,6 +58,26 @@ fn wait_for_health(port: u16, timeout: Duration) -> bool {
   false
 }
 
+fn resolve_ui_host(allow_lan: bool) -> String {
+  if !allow_lan {
+    return "127.0.0.1".to_string();
+  }
+
+  let socket = match UdpSocket::bind("0.0.0.0:0") {
+    Ok(socket) => socket,
+    Err(_) => return "127.0.0.1".to_string(),
+  };
+
+  if socket.connect("8.8.8.8:80").is_err() {
+    return "127.0.0.1".to_string();
+  }
+
+  match socket.local_addr() {
+    Ok(address) => address.ip().to_string(),
+    Err(_) => "127.0.0.1".to_string(),
+  }
+}
+
 fn main() {
   tauri::Builder::default()
     .setup(|app| {
@@ -71,9 +91,14 @@ fn main() {
         .ok_or("Missing web bundle in resources/web")?;
 
       let port = pick_port(5174, 50);
+      let allow_lan = std::env::var("ALLOW_LAN")
+        .map(|value| value != "false")
+        .unwrap_or(true);
+      let proxy_host = if allow_lan { "0.0.0.0" } else { "127.0.0.1" };
+
       let mut child = Command::new(proxy_path)
         .env("PROXY_PORT", port.to_string())
-        .env("PROXY_HOST", "127.0.0.1")
+        .env("PROXY_HOST", proxy_host)
         .env("SERVE_STATIC", "true")
         .env("STATIC_DIR", static_dir.to_string_lossy().to_string())
         .spawn()
@@ -88,7 +113,8 @@ fn main() {
         child: Mutex::new(Some(child)),
       });
 
-      let url = format!("http://127.0.0.1:{port}/");
+      let ui_host = resolve_ui_host(allow_lan);
+      let url = format!("http://{ui_host}:{port}/");
       tauri::api::shell::open(&app.shell_scope(), url, None)
         .map_err(|error| format!("Failed to open browser: {error}"))?;
 

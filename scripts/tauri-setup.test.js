@@ -58,4 +58,13 @@ describe('tauri installer scaffolding', () => {
     expect(Array.isArray(bundle?.icon)).toBe(true);
     expect(bundle.icon).toContain('icons/icon.ico');
   });
+
+  it('uses LAN-aware UI host resolution in launcher', () => {
+    const launcherPath = path.join(projectRoot, 'src-tauri', 'src', 'main.rs');
+    const launcherSource = fs.readFileSync(launcherPath, 'utf8');
+
+    expect(launcherSource).toContain('fn resolve_ui_host(allow_lan: bool) -> String');
+    expect(launcherSource).toContain('let ui_host = resolve_ui_host(allow_lan);');
+    expect(launcherSource).toContain('let url = format!("http://{ui_host}:{port}/");');
+  });
 });

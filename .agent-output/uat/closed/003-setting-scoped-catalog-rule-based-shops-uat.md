@@ -2,7 +2,7 @@
 ID: 3
 Origin: 3
 UUID: c4a2f9d1
-Status: Committed
+Status: Released
 ---
 
 # UAT Report: Plan 003 Setting-Scoped Catalog & Rule-Based Shops

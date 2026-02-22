@@ -4,7 +4,7 @@
 ID: 3
 Origin: 3
 UUID: c4a2f9d1
-Status: Approved
+Status: Released
 ---
 
 **Plan Reference**: `./.agent-output/planning/003-setting-scoped-catalog-rule-based-shops-plan.md`  

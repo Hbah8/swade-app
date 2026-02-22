@@ -2,13 +2,13 @@
 ID: 3
 Origin: 3
 UUID: c4a2f9d1
-Status: Committed
+Status: Released
 ---
 
 # QA Report: Plan 003 Setting-Scoped Catalog & Rule-Based Shops
 
 **Plan Reference**: `./.agent-output/planning/003-setting-scoped-catalog-rule-based-shops-plan.md`
-**QA Status**: Committed
+**QA Status**: Released
 **QA Specialist**: qa
 
 ## Changelog

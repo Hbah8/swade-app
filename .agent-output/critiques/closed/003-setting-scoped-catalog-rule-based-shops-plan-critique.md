@@ -2,7 +2,7 @@
 ID: 3
 Origin: 3
 UUID: c4a2f9d1
-Status: RESOLVED
+Status: Released
 ---
 
 # 003-setting-scoped-catalog-rule-based-shops-plan — Critique

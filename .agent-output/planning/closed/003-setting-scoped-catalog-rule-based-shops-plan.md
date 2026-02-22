@@ -2,14 +2,14 @@
 ID: 3
 Origin: 3
 UUID: c4a2f9d1
-Status: Committed
+Status: Released
 ---
 
 # Plan 003 — Setting-Scoped Catalog & Rule-Based Shops
 
 **Target Release**: v0.8.0  
 **Epic Alignment**: Setting-Scoped Catalog & Rule-Based Shops (from UserStories.md)  
-**Status**: Committed
+**Status**: Released
 
 ## Changelog
 

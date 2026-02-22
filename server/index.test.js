@@ -6,6 +6,7 @@ import path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { createApp } from './appFactory.js';
+import { normalizeCampaign } from './campaignStore.js';
 import { resolveRuntimeConfig } from './runtimeConfig.js';
 
 const cleanupPaths = [];
@@ -131,5 +132,43 @@ describe('shop api', () => {
         resolve(undefined);
       });
     });
+  });
+});
+
+describe('campaign normalization', () => {
+  it('migrates legacy schemaVersion 1.0 campaign into setting-scoped structure', () => {
+    const normalized = normalizeCampaign({
+      schemaVersion: '1.0',
+      catalog: [{ id: 'rope', name: 'Rope', basePrice: 10, weight: 1 }],
+      locations: [{ id: 'riverfall', name: 'Riverfall', availableItemIds: [], percentMarkup: 0, manualPrices: {} }],
+    });
+
+    expect(normalized.schemaVersion).toBe('2.0');
+    expect(normalized.activeSettingId).toBe('default-setting');
+    expect(normalized.settings).toHaveLength(1);
+    expect(normalized.settings[0].catalog).toHaveLength(1);
+    expect(normalized.settings[0].locations).toHaveLength(1);
+  });
+
+  it('keeps an already normalized 2.0 setting campaign unchanged in shape', () => {
+    const input = {
+      schemaVersion: '2.0',
+      activeSettingId: 'vegas-70s',
+      settings: [
+        {
+          id: 'vegas-70s',
+          name: '70s Vegas',
+          catalog: [],
+          locations: [],
+        },
+      ],
+    };
+
+    const normalized = normalizeCampaign(input);
+
+    expect(normalized.schemaVersion).toBe('2.0');
+    expect(normalized.activeSettingId).toBe('vegas-70s');
+    expect(normalized.settings).toHaveLength(1);
+    expect(normalized.settings[0].id).toBe('vegas-70s');
   });
 });

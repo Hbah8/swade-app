@@ -17,6 +17,9 @@ const catalogSchema = z.object({
       weight: z.number().nonnegative(),
       category: z.string().optional(),
       notes: z.string().optional(),
+      tags: z.array(z.string()).optional(),
+      legalStatus: z.string().optional(),
+      source: z.enum(['built-in', 'custom', 'imported']).optional(),
     }),
   ),
 });
@@ -56,6 +59,8 @@ export function buildLocationShopView(input: BuildLocationShopViewInput): Locati
       weight: item.weight,
       ...(item.category ? { category: item.category } : {}),
       ...(item.notes ? { notes: item.notes } : {}),
+      ...(Array.isArray(item.tags) ? { tags: item.tags } : {}),
+      ...(item.legalStatus ? { legalStatus: item.legalStatus } : {}),
     }));
 
   return {

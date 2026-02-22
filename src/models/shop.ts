@@ -5,6 +5,9 @@ export interface EquipmentItemDefinition {
   weight: number;
   category?: string;
   notes?: string;
+  tags?: string[];
+  legalStatus?: string;
+  source?: 'built-in' | 'custom' | 'imported';
 }
 
 export interface EquipmentCatalog {
@@ -18,6 +21,27 @@ export interface ShopLocation {
   availableItemIds: string[];
   percentMarkup: number;
   manualPrices: Record<string, number>;
+  rules?: ShopRuleConfig;
+  shareColumns?: string[];
+}
+
+export interface PricingProfile {
+  id: string;
+  name: string;
+  categoryModifiers: Record<string, number>;
+  rounding: 'integer' | 'none';
+}
+
+export interface ShopRuleConfig {
+  includeCategories: string[];
+  includeTags: string[];
+  excludeTags: string[];
+  legalStatuses: string[];
+  markupPercent: number;
+  pricingProfile: PricingProfile;
+  pinnedItemIds: string[];
+  bannedItemIds: string[];
+  manualPriceOverrides: Record<string, number>;
 }
 
 export interface LocationPriceInput {
@@ -34,6 +58,9 @@ export interface LocationShopViewItem {
   weight: number;
   category?: string;
   notes?: string;
+  tags?: string[];
+  legalStatus?: string;
+  source?: 'rule' | 'pinned' | 'override';
 }
 
 export interface LocationShopView {
@@ -48,7 +75,20 @@ export interface BuildLocationShopViewInput {
 }
 
 export interface ShopCampaignState {
+  schemaVersion: '2.0';
+  activeSettingId: string;
+  settings: ShopSetting[];
+}
+
+export interface LegacyShopCampaignState {
   schemaVersion: string;
+  catalog: EquipmentItemDefinition[];
+  locations: ShopLocation[];
+}
+
+export interface ShopSetting {
+  id: string;
+  name: string;
   catalog: EquipmentItemDefinition[];
   locations: ShopLocation[];
 }

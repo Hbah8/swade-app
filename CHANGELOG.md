@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.8.0 - 2026-02-22
+
+- Added setting-scoped shop campaign schema (`2.0`) with legacy migration from `1.0` and server backup snapshots for safer upgrades.
+- Added global setting selector in header and active-setting isolation for `/catalog` and `/shops` workflows.
+- Added new `/catalog` page with tabs (`Items`, `Sets`, `Tags`, `Health`), built-in author catalog set, custom item sheet form, and optional bulk import dialog (Merge/Replace/Append).
+- Added catalog metadata governance checks (missing tags, missing legal status, unknown tags) with CTA-driven filtered Items view.
+- Added built-in item governance in catalog rows: built-in items cannot be deleted and can be cloned to custom items.
+- Reworked `/shops` into rule-based flow with shop tabs and sub-tabs (`Rules`, `Preview`, `Share`) including include/exclude filters, legality switch, live matched count, exceptions (pin/ban), manual price overrides, and pricing profile selection.
+- Updated player shop API output to evaluate location rules and pricing pipeline while keeping read-only `/shop/:locationId` routing intact.
+- Added share controls for shop links and player column visibility configuration in shop share tab.
+- Added regression tests for campaign normalization and rule-engine behavior.
+
 ## v0.7.3 - 2026-02-22
 
 - Fixed runtime proxy mismatch: `server/proxy.cjs` now uses shared server app factory logic instead of stale duplicated route code.

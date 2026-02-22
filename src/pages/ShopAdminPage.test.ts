@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { openPlayerView } from '@/pages/ShopAdminPage';
+import { openPlayerView } from '@/pages/shopAdmin.helpers';
 
 describe('openPlayerView', () => {
   it('navigates to player view after successful sync', async () => {

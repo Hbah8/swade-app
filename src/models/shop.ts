@@ -32,6 +32,8 @@ export interface LocationShopViewItem {
   basePrice: number;
   finalPrice: number;
   weight: number;
+  category?: string;
+  notes?: string;
 }
 
 export interface LocationShopView {

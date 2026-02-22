@@ -21,6 +21,10 @@ const catalogSchema = z.object({
   ),
 });
 
+/**
+ * Resolve the final item price for a location.
+ * Manual price takes precedence over percent-based markup.
+ */
 export function calculateLocationPrice(input: LocationPriceInput): number {
   if (typeof input.manualOverride === 'number') {
     return input.manualOverride;
@@ -30,6 +34,10 @@ export function calculateLocationPrice(input: LocationPriceInput): number {
   return Math.round(input.basePrice * markupFactor);
 }
 
+/**
+ * Build a player-facing shop read-model from catalog and location settings.
+ * Includes optional category/notes fields when present in source catalog.
+ */
 export function buildLocationShopView(input: BuildLocationShopViewInput): LocationShopView {
   const availableItemIds = Array.isArray(input.location.availableItemIds) ? input.location.availableItemIds : [];
   const showAllItems = availableItemIds.length === 0;
@@ -46,6 +54,8 @@ export function buildLocationShopView(input: BuildLocationShopViewInput): Locati
         manualOverride: input.location.manualPrices[item.id],
       }),
       weight: item.weight,
+      ...(item.category ? { category: item.category } : {}),
+      ...(item.notes ? { notes: item.notes } : {}),
     }));
 
   return {
@@ -55,6 +65,9 @@ export function buildLocationShopView(input: BuildLocationShopViewInput): Locati
   };
 }
 
+/**
+ * Parse and validate equipment catalog payload against schema constraints.
+ */
 export function parseEquipmentCatalog(payload: string): EquipmentCatalog {
   const parsed = JSON.parse(payload);
   return catalogSchema.parse(parsed);

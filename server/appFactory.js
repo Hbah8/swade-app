@@ -74,6 +74,8 @@ export function createApp(options = {}) {
           basePrice: catalogItem.basePrice,
           finalPrice: manualPrice ?? computedPrice,
           weight: catalogItem.weight,
+          ...(catalogItem.category ? { category: catalogItem.category } : {}),
+          ...(catalogItem.notes ? { notes: catalogItem.notes } : {}),
         };
       });
 

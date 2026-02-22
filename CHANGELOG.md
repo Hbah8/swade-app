@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.7.2 - 2026-02-22
+
+- Reworked player shop view (`/shop/:locationId`) to use a shadcn-based data table powered by TanStack Table.
+- Added player-facing filters for item name, category, notes/features text, and final price range.
+- Extended shop read model and API output with optional `category` and `notes` fields to support richer table display.
+- Added focused tests for table filtering behavior and for propagation of `category`/`notes` through service and server shop responses.
+
 ## v0.7.1 - 2026-02-22
 
 - Fixed LAN accessibility defaults: frontend dev server now exposes network host and proxy defaults to LAN-enabled binding.

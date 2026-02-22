@@ -37,16 +37,32 @@ describe('shopService', () => {
         manualPrices: { torch: 12 },
       },
       catalog: [
-        { id: 'rope', name: 'Rope', basePrice: 10, weight: 1 },
-        { id: 'torch', name: 'Torch', basePrice: 5, weight: 0.5 },
+        { id: 'rope', name: 'Rope', basePrice: 10, weight: 1, category: 'Gear', notes: 'Climbing aid' },
+        { id: 'torch', name: 'Torch', basePrice: 5, weight: 0.5, category: 'Gear', notes: 'Provides light' },
         { id: 'sword', name: 'Sword', basePrice: 200, weight: 8 },
       ],
     })
 
     expect(view.locationName).toBe('Riverfall')
     expect(view.items).toEqual([
-      { id: 'rope', name: 'Rope', basePrice: 10, finalPrice: 11, weight: 1 },
-      { id: 'torch', name: 'Torch', basePrice: 5, finalPrice: 12, weight: 0.5 },
+      {
+        id: 'rope',
+        name: 'Rope',
+        basePrice: 10,
+        finalPrice: 11,
+        weight: 1,
+        category: 'Gear',
+        notes: 'Climbing aid',
+      },
+      {
+        id: 'torch',
+        name: 'Torch',
+        basePrice: 5,
+        finalPrice: 12,
+        weight: 0.5,
+        category: 'Gear',
+        notes: 'Provides light',
+      },
     ])
   })
 

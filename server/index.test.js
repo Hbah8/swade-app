@@ -86,7 +86,7 @@ describe('shop api', () => {
     const campaign = {
       schemaVersion: '1.0',
       catalog: [
-        { id: 'rope', name: 'Rope', basePrice: 10, weight: 1 },
+        { id: 'rope', name: 'Rope', basePrice: 10, weight: 1, category: 'Gear', notes: 'Climbing aid' },
         { id: 'torch', name: 'Torch', basePrice: 5, weight: 0.5 },
       ],
       locations: [
@@ -119,6 +119,8 @@ describe('shop api', () => {
 
     expect(response.status).toBe(200);
     expect(data.items).toHaveLength(2);
+    expect(data.items[0].category).toBe('Gear');
+    expect(data.items[0].notes).toBe('Climbing aid');
 
     await new Promise((resolve, reject) => {
       server.close((error) => {

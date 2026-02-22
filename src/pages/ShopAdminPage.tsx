@@ -1,21 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { openPlayerView } from '@/pages/shopAdmin.helpers';
 import { parseEquipmentCatalog } from '@/services/shopService';
 import { useShopStore } from '@/store/shopStore';
-
-export async function openPlayerView(
-  syncToServer: () => Promise<boolean>,
-  navigate: (to: string) => void,
-  locationId: string,
-): Promise<void> {
-  const didSync = await syncToServer();
-  if (!didSync) {
-    return;
-  }
-
-  navigate(`/shop/${locationId}`);
-}
 
 export function ShopAdminPage() {
   const navigate = useNavigate();

@@ -65,3 +65,21 @@ See `.github/instructions/` for detailed guidance:
 | `common-tasks.instructions.md` | Recipes for adding edges, pages, modifying calculations, testing |
 | `data-layer.instructions.md` | Data definitions arrays, factory functions, adding game content |
 | `vite-template-react.instructions.md` | Vite + React + SWC project template setup |
+
+## Agents usage
+
+See `.github/agents/` for detailed guidance:
+| File | Content |
+|---|---|
+| `architect.agent.md` | Agent design patterns: tool use, memory management, response formatting |
+| `analyst.agent.md` | Investigation techniques, gap tracking, handoff protocol |
+| `code-reviewer.agent.md` | Code review best practices: checklist, common issues, feedback formatting |
+| `qa.agent.md` | Testing strategies: test case design, edge cases, bug reporting format |
+| `roadmap.agent.md` | Roadmap creation: feature breakdown, prioritization, user story formatting |
+| `implementer.agent.md` | Implementation patterns: incremental development, commit message guidelines, PR formatting |
+
+## CLI output
+Before running a new command, explicitly wait for the previous command's output. If you run commands, you must read the full output and to confirm success before proceeding. Do not run multiple commands in parallel or run new commands before confirming the previous command's success.
+
+Example of reading terminal output:
+* @workspace /terminal Read the last output of npm run lint

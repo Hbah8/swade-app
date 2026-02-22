@@ -1,7 +1,7 @@
 # SWADE App — System Architecture
 
 **Status**: CURRENT  
-**Last Updated**: 2026-02-21  
+**Last Updated**: 2026-02-22  
 **Owner**: Architect (Copilot)
 
 ## Changelog
@@ -14,6 +14,7 @@
 | 2026-02-21 | Updated for LAN-first + Tauri-ready backend option; added ADR-003 | Backend is acceptable if packagable via Tauri (proxy.exe pattern) | Epic 0.7.1 |
 | 2026-02-21 | Chosen share approach: LAN/Tauri backend first | Enables short links and avoids URL length limits for shops | Epic 0.7.1 |
 | 2026-02-21 | Reconciled investigation: Tauri packaging supports bundled LAN proxy | Reduces technical uncertainty for planning | Analysis 001 |
+| 2026-02-22 | Reviewed Plan 002 (Shop player view → Data Table) | Approved with changes: must clarify TanStack vs simple Table contract; additive API fields category/notes | Plan 002 |
 
 ## Purpose
 
@@ -96,6 +97,7 @@ Primary constraints for future features:
 - **Shareable content without backend**: any data created on the GM device is not visible to players unless transported (URL payload, QR, or import/export). This is a hard constraint in the Web SPA profile.
 - **BrowserRouter deep links**: static hosting must provide SPA fallback routing; otherwise deep links like `/shop/...` may 404.
 - **Copyright risk**: shipping full SWADE rulebook tables (including comprehensive gear lists/prices) may be legally problematic; prefer user-provided imports or limited/generic starter data.
+- **Server/client pricing duplication**: price calculation + shop view mapping exists in both server handlers and client services; drift risk unless one path is treated as authoritative for a given view.
 
 ## Decisions (ADRs)
 

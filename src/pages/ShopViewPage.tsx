@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { ShopItemsTable } from '@/components/shop/ShopItemsTable';
+import { getShopEmptyStateMessage } from '@/pages/shopView.helpers';
 import type { LocationShopView } from '@/models/shop';
-
-export function getShopEmptyStateMessage(view: LocationShopView): string | null {
-  if (view.items.length === 0) {
-    return 'No items are currently available in this shop.';
-  }
-
-  return null;
-}
 
 export function ShopViewPage() {
   const { locationId } = useParams<{ locationId: string }>();
@@ -70,18 +64,7 @@ export function ShopViewPage() {
 
       {emptyStateMessage && <p className="text-sm text-swade-text-muted">{emptyStateMessage}</p>}
 
-      <div className="space-y-2">
-        {view.items.map((item) => (
-          <div
-            key={item.id}
-            className="grid grid-cols-[1fr_auto_auto] items-center gap-3 rounded-lg border border-swade-surface-light bg-swade-surface px-3 py-2"
-          >
-            <span className="text-sm text-swade-text">{item.name}</span>
-            <span className="text-xs text-swade-text-muted">Base: {item.basePrice}</span>
-            <span className="text-sm font-semibold text-swade-gold-light">{item.finalPrice}</span>
-          </div>
-        ))}
-      </div>
+      {!emptyStateMessage && <ShopItemsTable items={view.items} />}
     </div>
   );
 }

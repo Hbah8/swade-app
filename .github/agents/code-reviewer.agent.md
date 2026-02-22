@@ -3,7 +3,7 @@ description: Reviews code quality, architecture alignment, and maintainability b
 name: Code Reviewer
 target: vscode
 argument-hint: Reference the implementation to review (e.g., plan 002)
-tools: ['read/problems', 'read/readFile', 'search', 'todo']
+tools: [read/problems, read/readFile, edit/createDirectory, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/usages, todo]
 model: Claude Sonnet 4.5
 handoffs:
   - label: Request Implementation Fixes

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getShopEmptyStateMessage } from '@/pages/ShopViewPage';
+import { getShopEmptyStateMessage } from '@/pages/shopView.helpers';
 
 describe('getShopEmptyStateMessage', () => {
   it('returns explicit message when location has no items', () => {

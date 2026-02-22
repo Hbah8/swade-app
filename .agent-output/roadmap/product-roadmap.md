@@ -93,15 +93,15 @@ So that I can quickly reference item costs during sessions without searching thr
 
 ## Active Release Tracker
 
-**Current Working Release**: None (awaiting next epic planning)
+**Current Working Release**: v0.7.2
 
 | Plan ID | Title | UAT Status | Committed |
 |---------|-------|------------|----------|
-| - | No plans in progress | - | - |
+| 002 | Player Shop View: shadcn Data Table + Filters (Mobile-Friendly) | Pending | No |
 
-**Release Status**: No active release
-**Ready for Release**: N/A
-**Blocking Items**: None
+**Release Status**: Planning completed, implementation in progress
+**Ready for Release**: No
+**Blocking Items**: Pending implementation and QA/UAT for Plan 002
 
 ### Previous Releases
 

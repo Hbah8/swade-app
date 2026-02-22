@@ -6,7 +6,7 @@ describe('createId', () => {
   it('uses randomUUID when available', () => {
     const cryptoStub = {
       randomUUID: () => 'uuid-from-randomUUID',
-      getRandomValues: (_array: Uint8Array) => {
+      getRandomValues: () => {
         throw new Error('should not be called when randomUUID exists');
       },
     } as unknown as Crypto;

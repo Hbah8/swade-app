@@ -44,8 +44,7 @@ Core Responsibilities:
 9. Maintain clear QA state: Test Strategy Development → Awaiting Implementation → Testing In Progress → QA Complete/Failed
 10. Verify test effectiveness: validate real workflows, realistic edge cases
 11. Flag when tests pass but implementation risky
-12. Use Flowbaby memory for continuity
-13. **Status tracking**: When QA passes, update the plan's Status field to "QA Complete" and add changelog entry. Keep ./.agent-output docs' status current so other agents and users know document state at a glance.
+12. **Status tracking**: When QA passes, update the plan's Status field to "QA Complete" and add changelog entry. Keep ./.agent-output docs' status current so other agents and users know document state at a glance.
 
 Diagnosability & Telemetry Responsibilities (MANDATORY for incident/bug work):
 - If a root cause cannot be proven, require evidence that the change improves diagnosability (added log markers, structured context, correlation IDs, or other telemetry).

@@ -92,4 +92,49 @@ describe('shopStore sync compatibility', () => {
     expect(payload.locations[0].availableItemIds).toEqual(['custom-lockpick-set']);
     expect(payload.locations[0].manualPrices['custom-lockpick-set']).toBe(120);
   });
+
+  it('syncs only current location when using syncLocationToServer', async () => {
+    useShopStore.getState().addLocation('Downtown');
+    useShopStore.getState().addLocation('The Strip');
+
+    const [downtownId, stripId] = useShopStore.getState().activeSetting.locations.map((location) => location.id);
+    if (!downtownId || !stripId) {
+      throw new Error('Location ids must exist in test setup');
+    }
+
+    useShopStore.getState().setLocationRules(downtownId, (current) => ({
+      ...current,
+      includeCategories: ['tool'],
+      markupPercent: 15,
+    }));
+
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
+      if (typeof input === 'string' && input === '/api/campaign' && !init) {
+        return {
+          ok: true,
+          json: async () => useShopStore.getState().campaign,
+        } as Response;
+      }
+
+      if (typeof input === 'string' && input === '/api/campaign' && init?.method === 'PUT') {
+        return { ok: true } as Response;
+      }
+
+      throw new Error(`Unexpected fetch call: ${String(input)}`);
+    });
+
+    const didSync = await useShopStore.getState().syncLocationToServer(downtownId);
+
+    expect(didSync).toBe(true);
+    expect(fetchMock).toHaveBeenNthCalledWith(1, '/api/campaign');
+    const [, requestInit] = fetchMock.mock.calls[1] ?? [];
+    const payload = JSON.parse(String(requestInit?.body));
+    const activeSetting = payload.settings.find((setting: { id: string }) => setting.id === payload.activeSettingId);
+    const syncedDowntown = activeSetting.locations.find((location: { id: string }) => location.id === downtownId);
+    const untouchedStrip = activeSetting.locations.find((location: { id: string }) => location.id === stripId);
+
+    expect(syncedDowntown.rules.includeCategories).toEqual(['tool']);
+    expect(syncedDowntown.rules.markupPercent).toBe(15);
+    expect(untouchedStrip.rules.includeCategories).toEqual([]);
+  });
 });

@@ -34,9 +34,8 @@ Core Responsibilities:
 3. Determine actual system behavior through testing. Avoid theoretical hypotheses.
 4. Create `NNN-topic.md` in `./.agent-output/analysis/`. Start with "Value Statement and Business Objective".
 5. Provide factual findings with examples. Recommend only further analysis steps, not solutions. Document test infrastructure needs.
-6. Retrieve/store Flowbaby memory.
-7. **Status tracking**: Keep own analysis doc's Status current (Active, Planned, Implemented). Other agents and users rely on accurate status at a glance.
-8. **Surface remaining gaps**: Always clearly identify unaddressed parts of the requested analysis—in both the document and directly to the user in chat. If an unknown cannot be resolved, explain why and what is needed to close it.
+6. **Status tracking**: Keep own analysis doc's Status current (Active, Planned, Implemented). Other agents and users rely on accurate status at a glance.
+7. **Surface remaining gaps**: Always clearly identify unaddressed parts of the requested analysis—in both the document and directly to the user in chat. If an unknown cannot be resolved, explain why and what is needed to close it.
 
 Constraints:
 - Read-only on production code/config.

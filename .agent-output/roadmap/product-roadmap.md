@@ -18,12 +18,14 @@
 
 | Date & Time | Change | Rationale |
 |-------------|--------|-----------|
+| 2026-02-23 | Normalized Epic 0.8.2 + blocker wording to "Sync current shop" | Terminology alignment with Plan 004 contract (Sync-first decision) |
 | 2026-02-21 14:00 | Initial roadmap created with v0.7.0 release | User requested equipment/shop management functionality to reduce GM prep time and enable in-session item management |
 | 2026-02-21 14:00 | Added Epic 0.7.1: Location-Based Equipment & Pricing System | GM currently uses Excel tables; significant friction during sessions and prep |
 | 2026-02-21 16:30 | Updated Epic 0.7.1 constraints: LAN/Tauri backend-first | Architectural assessment confirmed LAN proxy + Tauri packaging is viable and preferred for user's LAN-first usage |
 | 2026-02-21 22:35 | Released v0.7.0 with Plan [001] Location-Based Equipment System | Plan 001 UAT approved, committed locally, tagged as v0.7.0, and pushed to origin. Epic 0.7.1 objectives delivered. |
 | 2026-02-22 18:00 | Released v0.7.2 with Plan [002] Player Shop View Data Table | Plan 002 UAT approved, committed locally, tagged as v0.7.2, and pushed to origin. |
 | 2026-02-23 12:10 | Released v0.8.0 with Plan [003] Setting-Scoped Catalog & Rule-Based Shops | Plan 003 UAT approved, committed locally, tagged as v0.8.0, and pushed to origin. Epic 0.8.1 objectives delivered. |
+| 2026-02-23 | Added release v0.8.1 planning bucket with Plan [004] | Post-release UX refinement was requested after v0.8.0 to improve admin usability and reduce control clutter. |
 ---
 
 ## Release v0.7.0 - GM Session Tools
@@ -147,17 +149,62 @@ So that shop management is fast, clean, and shareable without relying on raw JSO
 
 ---
 
+## Release v0.8.1 - Shop Manager Admin UX Refinement
+
+**Target Date**: 2026-Q1  
+**Strategic Goal**: Improve Shop Manager usability with production-like admin layout to reduce configuration errors and accelerate GM workflow.
+
+### Epic 0.8.2: Shop Manager Admin Layout
+
+**Priority**: P1  
+**Status**: Planned
+
+**User Story**:  
+As a Savage Worlds GM,  
+I want the Shop Manager page to use a production-like admin layout with shops sidebar, structured rules editor, and embedded live preview,  
+So that I can configure shops faster with fewer errors during prep and live sessions.
+
+**Business Value**:
+- **Reduces cognitive load**: Clean sidebar navigation replaces tabs, improving shop selection flow
+- **Accelerates configuration**: Split-screen live preview eliminates tab-switching friction
+- **Improves data safety**: Clear primary/secondary sync actions reduce accidental overwrites
+- **Professional appearance**: Admin-style layout increases user confidence in tool reliability
+
+**Dependencies**:
+- Extends Epic 0.8.1 (Setting-Scoped Catalog & Rule-Based Shops)
+- No new domain logic required; pure UI reorganization
+
+**Acceptance Criteria** (outcome-focused):
+- [ ] GM sees shops in left sidebar instead of tabs
+- [ ] GM sees rules editor + live preview side-by-side (no separate Preview tab)
+- [ ] GM can sync current shop to LAN without affecting other shops
+- [ ] GM can access share/advanced actions from header (no Share/Advanced tabs)
+- [ ] Mobile layout provides equivalent functionality (sidebar as sheet or stacked)
+
+**Constraints**:
+- No new color tokens or icon set changes
+- Use existing shadcn/ui components (add via CLI if needed)
+- "Sync current shop" semantics must be contract-accurate before release
+
+**Status Notes**:
+- 2026-02-23: Epic created based on user feedback (current layout feels cluttered and non-admin-like)
+- 2026-02-23: Plan [004] created and under critique review
+
+**Scope reference**: Plan [004]
+
+---
+
 ## Active Release Tracker
 
-**Current Working Release**: None (awaiting next planning cycle)
+**Current Working Release**: v0.8.1
 
 | Plan ID | Title | UAT Status | Committed |
-|---------|-------|------------|----------|
-| - | No active plans | - | - |
+|---------|-------|------------|-----------|
+| 004 | Shop Manager Admin Layout Refinement | Pending | ✗ |
 
-**Release Status**: v0.8.0 released; no plans currently in progress
-**Ready for Release**: N/A
-**Blocking Items**: None
+**Release Status**: 0 of 1 plans committed
+**Ready for Release**: No
+**Blocking Items**: Sync semantics contract for "Sync current shop" (tracked in Plan 004 milestone 1)
 
 ### Previous Releases
 

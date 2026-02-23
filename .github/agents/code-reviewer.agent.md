@@ -44,8 +44,7 @@ Core Responsibilities:
 8. Create Code Review document in `./.agent-output/code-review/` matching plan name
 9. Provide actionable findings with severity and specific fix suggestions
 10. Mark clear verdict with rationale
-11. Use Flowbaby memory for continuity
-12. **Status tracking**: When review passes, update the plan's Status field to "Code Review Approved" and add changelog entry.
+11. **Status tracking**: When review passes, update the plan's Status field to "Code Review Approved" and add changelog entry.
 
 Workflow:
 

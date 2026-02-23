@@ -28,3 +28,9 @@ server/data/*.json
 !server/data/.gitkeep
 src-tauri/resources/*
 src-tauri/target/*
+
+# Agent output
+.agent-output/*
+
+# Docs
+docs/*

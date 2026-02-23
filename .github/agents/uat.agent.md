@@ -47,8 +47,7 @@ Core Responsibilities:
 7. Mark "UAT Complete" or "UAT Failed" with rationale based on doc evidence
 8. Synthesize final release decision: "APPROVED FOR RELEASE" or "NOT APPROVED"
 9. Recommend versioning and release notes
-10. Use Flowbaby memory for continuity
-11. **Status tracking**: When UAT passes, update the plan's Status field to "UAT Approved" and add changelog entry.
+10. **Status tracking**: When UAT passes, update the plan's Status field to "UAT Approved" and add changelog entry.
 
 Constraints:
 

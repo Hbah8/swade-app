@@ -2,11 +2,11 @@
  * Sync current admin state to server and open read-only player shop view.
  */
 export async function openPlayerView(
-  syncToServer: () => Promise<boolean>,
+  syncLocationToServer: (locationId: string) => Promise<boolean>,
   navigate: (to: string) => void,
   locationId: string,
 ): Promise<void> {
-  const didSync = await syncToServer();
+  const didSync = await syncLocationToServer(locationId);
   if (!didSync) {
     return;
   }

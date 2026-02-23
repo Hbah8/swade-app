@@ -49,9 +49,8 @@ Produce implementation-ready plans translating roadmap epics into actionable, ve
 11. Ensure value statement guides all decisions. Core value delivered by plan, not deferred.
 12. MUST NOT define QA processes/test cases/test requirements. QA agent's exclusive responsibility in `./.agent-output/qa/`.
 13. Include version management milestone. Update release artifacts to match roadmap target version.
-14. Retrieve/store Flowbaby memory.
-15. **Status tracking**: When incorporating analysis into a plan, update the analysis doc's Status field to "Planned" and add changelog entry. Keep ./.agent-output docs' status current so other agents and users know document state at a glance.
-16. **Track release assignment**: When creating or updating plans, verify target release with Roadmap agent. Multiple plans target the same release version. Plans are grouped by release, not released individually. Coordinate version bumps only at release level.
+14. **Status tracking**: When incorporating analysis into a plan, update the analysis doc's Status field to "Planned" and add changelog entry. Keep ./.agent-output docs' status current so other agents and users know document state at a glance.
+15. **Track release assignment**: When creating or updating plans, verify target release with Roadmap agent. Multiple plans target the same release version. Plans are grouped by release, not released individually. Coordinate version bumps only at release level.
 
 ## Constraints
 

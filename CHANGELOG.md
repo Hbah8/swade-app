@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.8.1 - 2026-02-23
+
+- Reworked `/shops` into a production-style admin layout with shop sidebar and split workspace (`Rules editor` + always-visible `Live preview`), removing all tabs from Shop Manager.
+- Added header actions for `Sync current shop`, `Open Player View`, and `Copy Link`, plus a `More` sheet for secondary actions.
+- Added per-shop sync contract implementation via new store action that merges and persists only the selected location to LAN (`syncLocationToServer(locationId)`).
+- Added clear sync state feedback (`Dirty` / `Synced • hh:mm`) and debounce-based live preview refresh behavior.
+- Replaced binary legality switch with tri-state mode selection (`Any`, `Legal only`, `Illegal only`) and optional custom legal-status selection.
+- Moved destructive actions behind confirmation in advanced actions panel.
+- Added/updated regression tests for per-shop sync behavior, open-player-view sync semantics, and admin UI contract.
+
 ## v0.8.0 - 2026-02-22
 
 - Added setting-scoped shop campaign schema (`2.0`) with legacy migration from `1.0` and server backup snapshots for safer upgrades.

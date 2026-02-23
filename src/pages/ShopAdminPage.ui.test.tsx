@@ -79,12 +79,65 @@ describe('ShopAdminPage UI contracts', () => {
       setLocationRules: vi.fn(),
       setLocationShareColumns: vi.fn(),
       syncFromServer: vi.fn().mockResolvedValue(undefined),
+      syncLocationToServer: vi.fn().mockResolvedValue(true),
       syncToServer: vi.fn().mockResolvedValue(true),
     } as unknown as ReturnType<typeof useShopStore>);
   });
 
-  it('shows blocking metadata alert with CTA to catalog health', async () => {
+  it('syncs current shop from primary action', async () => {
     const user = userEvent.setup();
+    const syncLocationToServer = vi.fn().mockResolvedValue(true);
+
+    mockedUseShopStore.mockReturnValue({
+      activeSetting: {
+        id: 'default-setting',
+        name: '70s Vegas',
+        catalog: [
+          {
+            id: 'snub',
+            name: 'Snub Revolver',
+            basePrice: 180,
+            weight: 1,
+            category: 'firearm',
+          },
+        ],
+        locations: [
+          {
+            id: 'downtown',
+            name: 'Downtown',
+            availableItemIds: [],
+            percentMarkup: 0,
+            manualPrices: {},
+            rules: {
+              includeCategories: [],
+              includeTags: ['firearm'],
+              excludeTags: [],
+              legalStatuses: [],
+              markupPercent: 0,
+              pricingProfile: {
+                id: 'default',
+                name: 'Default',
+                categoryModifiers: {},
+                rounding: 'integer',
+              },
+              pinnedItemIds: [],
+              bannedItemIds: [],
+              manualPriceOverrides: {},
+            },
+            shareColumns: ['name', 'category', 'finalPrice', 'weight'],
+          },
+        ],
+      },
+      syncError: null,
+      isSyncing: false,
+      addLocation: vi.fn(),
+      removeLocation: vi.fn(),
+      setLocationRules: vi.fn(),
+      setLocationShareColumns: vi.fn(),
+      syncFromServer: vi.fn().mockResolvedValue(undefined),
+      syncLocationToServer,
+      syncToServer: vi.fn().mockResolvedValue(true),
+    } as ReturnType<typeof useShopStore>);
 
     render(
       <MemoryRouter>
@@ -92,10 +145,9 @@ describe('ShopAdminPage UI contracts', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('alert')).toHaveTextContent('Rule filters require missing metadata');
+    await user.click(screen.getByRole('button', { name: 'Sync current shop' }));
 
-    await user.click(screen.getByRole('button', { name: 'Open Catalog Health' }));
-    expect(navigateMock).toHaveBeenCalledWith('/catalog?tab=Health');
+    expect(syncLocationToServer).toHaveBeenCalledWith('downtown');
   });
 
   it('shows toast status after copying share link', async () => {
@@ -107,10 +159,23 @@ describe('ShopAdminPage UI contracts', () => {
       </MemoryRouter>,
     );
 
-    await user.click(screen.getByRole('tab', { name: 'Share' }));
-    await user.click(screen.getByRole('button', { name: 'Copy link' }));
+    await user.click(screen.getByRole('button', { name: 'Copy Link' }));
 
     expect(screen.getByRole('status')).toHaveTextContent('Link copied');
+  });
+
+  it('renders admin split layout controls without tabs', () => {
+    render(
+      <MemoryRouter>
+        <ShopAdminPage />
+      </MemoryRouter>,
+    );
+
+    expect(screen.queryByRole('tablist')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Sync current shop' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Open Player View' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Copy Link' })).toBeInTheDocument();
+    expect(screen.getByText('Live preview')).toBeInTheDocument();
   });
 
   it('deletes location when Delete shop is clicked', async () => {
@@ -164,6 +229,7 @@ describe('ShopAdminPage UI contracts', () => {
       setLocationRules: vi.fn(),
       setLocationShareColumns: vi.fn(),
       syncFromServer: vi.fn().mockResolvedValue(undefined),
+      syncLocationToServer: vi.fn().mockResolvedValue(true),
       syncToServer: vi.fn().mockResolvedValue(true),
     } as ReturnType<typeof useShopStore>);
 
@@ -173,7 +239,9 @@ describe('ShopAdminPage UI contracts', () => {
       </MemoryRouter>,
     );
 
-    await user.click(screen.getByRole('button', { name: 'Delete shop' }));
+    await user.click(screen.getByRole('button', { name: 'More' }));
+    await user.click(await screen.findByRole('button', { name: 'Delete shop' }));
+    await user.click(screen.getByRole('button', { name: 'Confirm delete' }));
 
     expect(removeLocation).toHaveBeenCalledWith('downtown');
   });

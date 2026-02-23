@@ -26,6 +26,7 @@ interface ShopState {
   setLocationManualPrice: (locationId: string, itemId: string, price: number) => void;
   toggleItemAvailability: (locationId: string, itemId: string) => void;
   syncFromServer: () => Promise<void>;
+  syncLocationToServer: (locationId: string) => Promise<boolean>;
   syncToServer: () => Promise<boolean>;
 }
 
@@ -395,6 +396,83 @@ export const useShopStore = create<ShopState>()(
         } catch (error) {
           const message = error instanceof Error ? error.message : 'Unable to load campaign data from server';
           set({ isSyncing: false, syncError: message });
+        }
+      },
+
+      syncLocationToServer: async (locationId) => {
+        set({ isSyncing: true, syncError: null });
+        try {
+          const localCampaign = get().campaign;
+          const localActiveSetting = getActiveSetting(localCampaign);
+          const localLocation = localActiveSetting.locations.find((location) => location.id === locationId);
+          if (!localLocation) {
+            throw new Error('Selected location was not found in local campaign state');
+          }
+
+          const preview = buildRuleBasedShopPreview({
+            catalog: localActiveSetting.catalog,
+            rules: localLocation.rules ?? createDefaultShopRules(),
+          });
+
+          const compatibilityLocation = {
+            ...localLocation,
+            availableItemIds: preview.items.map((item) => item.id),
+            manualPrices: Object.fromEntries(preview.items.map((item) => [item.id, item.finalPrice])),
+            percentMarkup: 0,
+          };
+
+          const currentServerResponse = await fetch('/api/campaign');
+          if (!currentServerResponse.ok) {
+            throw new Error(`Server responded with ${currentServerResponse.status}`);
+          }
+
+          const serverCampaign = normalizeClientCampaign(await currentServerResponse.json());
+          const settingExists = serverCampaign.settings.some((setting) => setting.id === localActiveSetting.id);
+          if (!settingExists) {
+            throw new Error('Active setting was not found on server. Use Sync All Shops first.');
+          }
+
+          const mergedCampaign = {
+            ...serverCampaign,
+            settings: serverCampaign.settings.map((setting) => {
+              if (setting.id !== localActiveSetting.id) {
+                return setting;
+              }
+
+              const locationExists = setting.locations.some((location) => location.id === compatibilityLocation.id);
+              return {
+                ...setting,
+                locations: locationExists
+                  ? setting.locations.map((location) =>
+                      location.id === compatibilityLocation.id ? compatibilityLocation : location,
+                    )
+                  : [...setting.locations, compatibilityLocation],
+              };
+            }),
+          };
+
+          const mergedActiveSetting = getActiveSetting(mergedCampaign);
+
+          const response = await fetch('/api/campaign', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...mergedCampaign,
+              catalog: mergedActiveSetting.catalog,
+              locations: mergedActiveSetting.locations,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}`);
+          }
+
+          set({ isSyncing: false, syncError: null });
+          return true;
+        } catch (error) {
+          const message = error instanceof Error ? error.message : 'Unable to sync current shop to server';
+          set({ isSyncing: false, syncError: message });
+          return false;
         }
       },
 

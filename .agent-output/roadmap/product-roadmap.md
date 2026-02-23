@@ -1,6 +1,6 @@
 # SWADE App - Product Roadmap
 
-**Last Updated**: 2026-02-23 12:10  
+**Last Updated**: 2026-02-23 23:55  
 **Roadmap Owner**: roadmap agent  
 **Strategic Vision**: Comprehensive digital toolset for Savage Worlds GMs and players, eliminating preparation overhead and enabling seamless in-session reference and management.
 
@@ -18,6 +18,9 @@
 
 | Date & Time | Change | Rationale |
 |-------------|--------|-----------|
+| 2026-02-23 23:55 | Plan 005 committed locally; v0.8.2 ready for release approval | UAT approved and Stage 1 DevOps commit completed; awaiting explicit user confirmation for push/tag. |
+| 2026-02-23 21:40 | Added Plan 005 (v0.8.2) refactor-only maintainability work | Code review noted ShopAdminPage maintainability risks; follow-up refactor reduces future change risk. |
+| 2026-02-23 21:30 | Plan 004 committed locally; v0.8.1 ready for release | Shop Manager Admin Layout UAT approved and committed. All plans for v0.8.1 complete. |
 | 2026-02-23 | Normalized Epic 0.8.2 + blocker wording to "Sync current shop" | Terminology alignment with Plan 004 contract (Sync-first decision) |
 | 2026-02-21 14:00 | Initial roadmap created with v0.7.0 release | User requested equipment/shop management functionality to reduce GM prep time and enable in-session item management |
 | 2026-02-21 14:00 | Added Epic 0.7.1: Location-Based Equipment & Pricing System | GM currently uses Excel tables; significant friction during sessions and prep |
@@ -196,15 +199,23 @@ So that I can configure shops faster with fewer errors during prep and live sess
 
 ## Active Release Tracker
 
-**Current Working Release**: v0.8.1
+**Current Working Release**: v0.8.2
 
 | Plan ID | Title | UAT Status | Committed |
 |---------|-------|------------|-----------|
-| 004 | Shop Manager Admin Layout Refinement | Pending | ✗ |
+| 005 | Shop Admin Page Refactor (Maintainability) | Approved | ✓ |
 
-**Release Status**: 0 of 1 plans committed
-**Ready for Release**: No
-**Blocking Items**: Sync semantics contract for "Sync current shop" (tracked in Plan 004 milestone 1)
+**Release Status**: 1 of 1 plans committed
+**Ready for Release**: Yes (Awaiting explicit release confirmation)
+**Blocking Items**: None
+
+### Release Candidate
+
+**v0.8.1** is ready for release:
+
+| Plan ID | Title | UAT Status | Committed |
+|---------|-------|------------|-----------|
+| 004 | Shop Manager Admin Layout Refinement | Approved | ✓ |
 
 ### Previous Releases
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.8.2 - 2026-02-23
+
+- Refactored `ShopAdminPage` into focused UI components under `src/components/shop-admin/` while preserving existing behavior and UX contract.
+- Added reusable `MultiSelectPicker` to remove duplicated popover/command/checkbox patterns across categories/tags/status filters.
+- Added dedicated `ShopSidebar`, `ShopAdminHeader`, `ShopRulesEditor`, `ShopLivePreview`, and `ShopAdvancedSheet` components to reduce cognitive load and improve maintainability.
+- Fixed dialog accessibility warning by adding `DialogDescription` to delete confirmation content.
+- Kept existing shop sync/store contracts intact (no route, payload, or domain behavior changes).
+
 ## v0.8.1 - 2026-02-23
 
 - Reworked `/shops` into a production-style admin layout with shop sidebar and split workspace (`Rules editor` + always-visible `Live preview`), removing all tabs from Shop Manager.

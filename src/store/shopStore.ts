@@ -19,6 +19,7 @@ interface ShopState {
   deleteCatalogItem: (itemId: string) => boolean;
   importCatalog: (catalog: EquipmentItemDefinition[]) => void;
   addLocation: (name: string) => void;
+  removeLocation: (locationId: string) => void;
   setLocationRules: (locationId: string, updater: (rules: ShopRuleConfig) => ShopRuleConfig) => void;
   setLocationShareColumns: (locationId: string, columns: string[]) => void;
   setLocationMarkup: (locationId: string, percentMarkup: number) => void;
@@ -206,6 +207,26 @@ export const useShopStore = create<ShopState>()(
               };
               return getActiveSetting(campaign);
             })(),
+          };
+        }),
+
+      removeLocation: (locationId) =>
+        set((state) => {
+          const campaign = {
+            ...state.campaign,
+            settings: state.campaign.settings.map((setting) =>
+              setting.id === state.campaign.activeSettingId
+                ? {
+                    ...setting,
+                    locations: setting.locations.filter((location) => location.id !== locationId),
+                  }
+                : setting,
+            ),
+          };
+
+          return {
+            campaign,
+            activeSetting: getActiveSetting(campaign),
           };
         }),
 

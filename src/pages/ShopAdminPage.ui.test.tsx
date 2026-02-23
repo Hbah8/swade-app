@@ -75,6 +75,7 @@ describe('ShopAdminPage UI contracts', () => {
       syncError: null,
       isSyncing: false,
       addLocation: vi.fn(),
+      removeLocation: vi.fn(),
       setLocationRules: vi.fn(),
       setLocationShareColumns: vi.fn(),
       syncFromServer: vi.fn().mockResolvedValue(undefined),
@@ -110,5 +111,70 @@ describe('ShopAdminPage UI contracts', () => {
     await user.click(screen.getByRole('button', { name: 'Copy link' }));
 
     expect(screen.getByRole('status')).toHaveTextContent('Link copied');
+  });
+
+  it('deletes location when Delete shop is clicked', async () => {
+    const user = userEvent.setup();
+    const removeLocation = vi.fn();
+
+    mockedUseShopStore.mockReturnValue({
+      activeSetting: {
+        id: 'default-setting',
+        name: '70s Vegas',
+        catalog: [
+          {
+            id: 'snub',
+            name: 'Snub Revolver',
+            basePrice: 180,
+            weight: 1,
+            category: 'firearm',
+          },
+        ],
+        locations: [
+          {
+            id: 'downtown',
+            name: 'Downtown',
+            availableItemIds: [],
+            percentMarkup: 0,
+            manualPrices: {},
+            rules: {
+              includeCategories: [],
+              includeTags: ['firearm'],
+              excludeTags: [],
+              legalStatuses: [],
+              markupPercent: 0,
+              pricingProfile: {
+                id: 'default',
+                name: 'Default',
+                categoryModifiers: {},
+                rounding: 'integer',
+              },
+              pinnedItemIds: [],
+              bannedItemIds: [],
+              manualPriceOverrides: {},
+            },
+            shareColumns: ['name', 'category', 'finalPrice', 'weight'],
+          },
+        ],
+      },
+      syncError: null,
+      isSyncing: false,
+      addLocation: vi.fn(),
+      removeLocation,
+      setLocationRules: vi.fn(),
+      setLocationShareColumns: vi.fn(),
+      syncFromServer: vi.fn().mockResolvedValue(undefined),
+      syncToServer: vi.fn().mockResolvedValue(true),
+    } as ReturnType<typeof useShopStore>);
+
+    render(
+      <MemoryRouter>
+        <ShopAdminPage />
+      </MemoryRouter>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Delete shop' }));
+
+    expect(removeLocation).toHaveBeenCalledWith('downtown');
   });
 });

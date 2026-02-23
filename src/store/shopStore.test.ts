@@ -35,6 +35,22 @@ describe('shopStore sync compatibility', () => {
     expect(useShopStore.getState().syncError).toContain('Local data kept');
   });
 
+  it('removes a location from active setting', () => {
+    useShopStore.getState().addLocation('Downtown');
+    useShopStore.getState().addLocation('The Strip');
+
+    const locationId = useShopStore.getState().activeSetting.locations[0]?.id;
+    if (!locationId) {
+      throw new Error('Location id must exist in test setup');
+    }
+
+    useShopStore.getState().removeLocation(locationId);
+
+    const remainingLocationIds = useShopStore.getState().activeSetting.locations.map((location) => location.id);
+    expect(remainingLocationIds).not.toContain(locationId);
+    expect(remainingLocationIds).toHaveLength(1);
+  });
+
   it('sends compatibility catalog and locations fields with sync payload', async () => {
     useShopStore.getState().addCatalogItem({
       id: 'custom-lockpick-set',

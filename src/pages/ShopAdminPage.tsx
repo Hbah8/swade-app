@@ -72,6 +72,7 @@ export function ShopAdminPage() {
     syncError,
     isSyncing,
     addLocation,
+    removeLocation,
     setLocationRules,
     setLocationShareColumns,
     syncFromServer,
@@ -239,6 +240,18 @@ export function ShopAdminPage() {
                     <CardTitle>{item.name}</CardTitle>
                     <div className="flex items-center gap-2">
                       <Badge>{itemPreview.items.length} matched</Badge>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="destructive"
+                        disabled={isSyncing}
+                        onClick={() => {
+                          removeLocation(item.id);
+                          setToast('Shop deleted');
+                        }}
+                      >
+                        Delete shop
+                      </Button>
                       <Button
                         type="button"
                         size="sm"

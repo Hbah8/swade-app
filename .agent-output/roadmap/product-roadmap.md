@@ -1,6 +1,6 @@
 # SWADE App - Product Roadmap
 
-**Last Updated**: 2026-02-23 23:55  
+**Last Updated**: 2026-02-24 00:20  
 **Roadmap Owner**: roadmap agent  
 **Strategic Vision**: Comprehensive digital toolset for Savage Worlds GMs and players, eliminating preparation overhead and enabling seamless in-session reference and management.
 
@@ -18,6 +18,7 @@
 
 | Date & Time | Change | Rationale |
 |-------------|--------|-----------|
+| 2026-02-24 00:20 | Released v0.8.2 with Plan [005] | User approved release; tag `v0.8.2` and branch `main` pushed successfully. |
 | 2026-02-23 23:55 | Plan 005 committed locally; v0.8.2 ready for release approval | UAT approved and Stage 1 DevOps commit completed; awaiting explicit user confirmation for push/tag. |
 | 2026-02-23 21:40 | Added Plan 005 (v0.8.2) refactor-only maintainability work | Code review noted ShopAdminPage maintainability risks; follow-up refactor reduces future change risk. |
 | 2026-02-23 21:30 | Plan 004 committed locally; v0.8.1 ready for release | Shop Manager Admin Layout UAT approved and committed. All plans for v0.8.1 complete. |
@@ -205,8 +206,8 @@ So that I can configure shops faster with fewer errors during prep and live sess
 |---------|-------|------------|-----------|
 | 005 | Shop Admin Page Refactor (Maintainability) | Approved | ✓ |
 
-**Release Status**: 1 of 1 plans committed
-**Ready for Release**: Yes (Awaiting explicit release confirmation)
+**Release Status**: Released
+**Ready for Release**: Completed
 **Blocking Items**: None
 
 ### Release Candidate
@@ -221,6 +222,7 @@ So that I can configure shops faster with fewer errors during prep and live sess
 
 | Version | Date | Plans Included | Status |
 |---------|------|----------------|--------|
+| v0.8.2 | 2026-02-24 | [005] Shop Admin Page Refactor (Maintainability) | Released |
 | v0.8.0 | 2026-02-23 | [003] Setting-Scoped Catalog & Rule-Based Shops | Released |
 | v0.7.2 | 2026-02-22 | [002] Player Shop View Data Table + Filters | Released |
 | v0.7.0 | 2026-02-21 | [001] Location-Based Equipment System (LAN/Tauri) | Released |

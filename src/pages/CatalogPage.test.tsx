@@ -16,11 +16,13 @@ describe('CatalogPage', () => {
   let addCatalogItemMock: ReturnType<typeof vi.fn>;
   let importCatalogMock: ReturnType<typeof vi.fn>;
   let syncToServerMock: ReturnType<typeof vi.fn>;
+  let syncFromServerMock: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     addCatalogItemMock = vi.fn();
     importCatalogMock = vi.fn();
     syncToServerMock = vi.fn().mockResolvedValue(true);
+    syncFromServerMock = vi.fn().mockResolvedValue(undefined);
     mockedUseShopStore.mockReturnValue({
       activeSetting: {
         id: 'default-setting',
@@ -41,8 +43,19 @@ describe('CatalogPage', () => {
       addCatalogItem: addCatalogItemMock,
       cloneCatalogItemToCustom: vi.fn(),
       deleteCatalogItem: vi.fn().mockReturnValue(true),
+      syncFromServer: syncFromServerMock,
       syncToServer: syncToServerMock,
     } as unknown as ReturnType<typeof useShopStore>);
+  });
+
+  it('syncs from server on mount to prevent stale catalog data', async () => {
+    render(
+      <MemoryRouter>
+        <CatalogPage />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => expect(syncFromServerMock).toHaveBeenCalledTimes(1));
   });
 
   it('shows destructive alert and disables import when JSON schema is invalid', async () => {

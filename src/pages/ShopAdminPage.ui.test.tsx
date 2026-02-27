@@ -164,14 +164,16 @@ describe('ShopAdminPage UI contracts', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Link copied');
   });
 
-  it('renders admin split layout controls without tabs', () => {
+  it('renders admin split layout controls with exceptions tabs', () => {
     render(
       <MemoryRouter>
         <ShopAdminPage />
       </MemoryRouter>,
     );
 
-    expect(screen.queryByRole('tablist')).not.toBeInTheDocument();
+    expect(screen.getByRole('tablist')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Pinned' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Banned' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Sync current shop' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Open Player View' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Copy Link' })).toBeInTheDocument();

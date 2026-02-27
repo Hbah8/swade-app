@@ -11,6 +11,9 @@ import {
 } from '@/components/ui/command';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ChevronDown } from 'lucide-react';
+
+const MAX_VISIBLE_SELECTIONS = 2;
 
 interface MultiSelectPickerProps {
   label: string;
@@ -20,9 +23,13 @@ interface MultiSelectPickerProps {
   options: string[];
   selected: string[];
   onToggle: (value: string) => void;
-  fallbackBadgeLabel?: string;
+  emptyStateBadgeLabel?: string;
 }
 
+/**
+ * Renders a searchable multi-select picker with badge summary of current selections.
+ * Shows an explicit empty-state badge when nothing is selected.
+ */
 export function MultiSelectPicker({
   label,
   triggerLabel,
@@ -31,18 +38,22 @@ export function MultiSelectPicker({
   options,
   selected,
   onToggle,
-  fallbackBadgeLabel,
+  emptyStateBadgeLabel,
 }: MultiSelectPickerProps) {
+  const visibleSelections = selected.slice(0, MAX_VISIBLE_SELECTIONS);
+  const hiddenSelectionCount = selected.length - visibleSelections.length;
+
   return (
     <div className="space-y-2">
       <Label>{label}</Label>
       <Popover>
         <PopoverTrigger asChild>
-          <Button type="button" variant="outline">
-            {triggerLabel}
+          <Button type="button" variant="outline" className="w-full justify-between">
+            <span>{triggerLabel}</span>
+            <ChevronDown className="size-4 opacity-70" aria-hidden="true" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0">
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
           <Command>
             <CommandInput placeholder={searchPlaceholder} />
             <CommandList>
@@ -59,16 +70,17 @@ export function MultiSelectPicker({
           </Command>
         </PopoverContent>
       </Popover>
-      <div className="flex flex-wrap gap-1">
-        {selected.length === 0 && fallbackBadgeLabel ? (
-          <Badge variant="outline">{fallbackBadgeLabel}</Badge>
+      <div className="min-h-6 flex flex-wrap items-center gap-1">
+        {selected.length === 0 ? (
+          <Badge variant="secondary">{emptyStateBadgeLabel ?? 'None selected'}</Badge>
         ) : (
-          selected.map((value) => (
+          visibleSelections.map((value) => (
             <Badge key={value} variant="secondary">
               {value}
             </Badge>
           ))
         )}
+        {hiddenSelectionCount > 0 ? <Badge variant="outline">+{hiddenSelectionCount}</Badge> : null}
       </div>
     </div>
   );

@@ -1,13 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import { BUILT_IN_CATALOG_SETS, VEGAS_TAG_POOL } from '@/data/shopBuiltInCatalog';
+import { VEGAS_TAG_POOL } from '@/data/shopBuiltInCatalog';
 import { parseEquipmentCatalog } from '@/services/shopService';
 import { useShopStore } from '@/store/shopStore';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -17,20 +15,15 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Toast } from '@/components/ui/toast';
 
 type ImportMode = 'merge' | 'replace' | 'append';
-type ItemFilter = 'all' | 'missing-tags' | 'missing-legal' | 'unknown-tags';
 
 const CATEGORIES = ['firearm', 'melee', 'tool', 'cleaning', 'disposal', 'surveillance', 'interrogation', 'deception', 'restraint', 'medical'];
 
 export function CatalogPage() {
-  const { activeSetting, importCatalog, addCatalogItem, cloneCatalogItemToCustom, deleteCatalogItem, syncToServer } = useShopStore();
-  const [searchParams] = useSearchParams();
-
-  const [activeTab, setActiveTab] = useState(searchParams.get('tab')?.toLowerCase() === 'health' ? 'health' : 'items');
-  const [itemFilter, setItemFilter] = useState<ItemFilter>('all');
+  const { activeSetting, importCatalog, addCatalogItem, cloneCatalogItemToCustom, deleteCatalogItem, syncFromServer, syncToServer } = useShopStore();
   const [toast, setToast] = useState<string | null>(null);
 
   const [name, setName] = useState('');
@@ -48,34 +41,9 @@ export function CatalogPage() {
   const [importWarning, setImportWarning] = useState<string | null>(null);
   const [isImportPayloadValid, setIsImportPayloadValid] = useState(false);
 
-  const unknownTagSet = useMemo(() => {
-    const knownTags = new Set(VEGAS_TAG_POOL);
-    const values = new Set<string>();
-    activeSetting.catalog.forEach((item) => {
-      (item.tags ?? []).forEach((tag) => {
-        if (!knownTags.has(tag as (typeof VEGAS_TAG_POOL)[number])) {
-          values.add(tag);
-        }
-      });
-    });
-    return values;
-  }, [activeSetting.catalog]);
-
-  const itemsMissingTags = useMemo(() => activeSetting.catalog.filter((item) => !item.tags || item.tags.length === 0), [activeSetting.catalog]);
-  const itemsMissingLegal = useMemo(() => activeSetting.catalog.filter((item) => !item.legalStatus), [activeSetting.catalog]);
-
-  const filteredItems = useMemo(() => {
-    if (itemFilter === 'missing-tags') {
-      return itemsMissingTags;
-    }
-    if (itemFilter === 'missing-legal') {
-      return itemsMissingLegal;
-    }
-    if (itemFilter === 'unknown-tags') {
-      return activeSetting.catalog.filter((item) => (item.tags ?? []).some((tag) => unknownTagSet.has(tag)));
-    }
-    return activeSetting.catalog;
-  }, [activeSetting.catalog, itemFilter, itemsMissingLegal, itemsMissingTags, unknownTagSet]);
+  useEffect(() => {
+    void syncFromServer();
+  }, [syncFromServer]);
 
   useEffect(() => {
     if (!toast) {
@@ -177,11 +145,6 @@ export function CatalogPage() {
       setImportError('Schema validation failed for import payload');
       setIsImportPayloadValid(false);
     }
-  };
-
-  const applyHealthFilter = (filter: ItemFilter) => {
-    setItemFilter(filter);
-    setActiveTab('items');
   };
 
   return (
@@ -356,112 +319,52 @@ export function CatalogPage() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList>
-          <TabsTrigger value="items">Items</TabsTrigger>
-          <TabsTrigger value="sets">Sets</TabsTrigger>
-          <TabsTrigger value="tags">Tags</TabsTrigger>
-          <TabsTrigger value="health">Health</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="items" className="space-y-2">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-swade-text-muted">Filter: {itemFilter}</p>
-            {itemFilter !== 'all' && <Button size="sm" variant="outline" onClick={() => setItemFilter('all')}>Clear filter</Button>}
-          </div>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Weight</TableHead>
-                <TableHead>Source</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredItems.map((item) => {
-                const sourceLabel = item.source === 'built-in' ? 'Built-in' : item.source === 'imported' ? 'Imported' : 'Custom';
-                return (
-                  <TableRow key={item.id}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.category ?? '—'}</TableCell>
-                    <TableCell>{item.basePrice}</TableCell>
-                    <TableCell>{item.weight}</TableCell>
-                    <TableCell><Badge>{sourceLabel}</Badge></TableCell>
-                    <TableCell className="flex gap-2">
-                      {item.source === 'built-in' && (
-                        <Button size="sm" variant="outline" onClick={() => { cloneCatalogItemToCustom(item.id); setToast('Built-in item cloned to Custom'); }}>
-                          Clone
-                        </Button>
-                      )}
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        disabled={item.source === 'built-in'}
-                        onClick={() => {
-                          const deleted = deleteCatalogItem(item.id);
-                          setToast(deleted ? 'Item deleted' : 'Built-in items cannot be deleted');
-                        }}
-                      >
-                        Delete
+      <div className="space-y-2">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Weight</TableHead>
+              <TableHead>Source</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {activeSetting.catalog.map((item) => {
+              const sourceLabel = item.source === 'built-in' ? 'Built-in' : item.source === 'imported' ? 'Imported' : 'Custom';
+              return (
+                <TableRow key={item.id}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.category ?? '—'}</TableCell>
+                  <TableCell>{item.basePrice}</TableCell>
+                  <TableCell>{item.weight}</TableCell>
+                  <TableCell><Badge>{sourceLabel}</Badge></TableCell>
+                  <TableCell className="flex gap-2">
+                    {item.source === 'built-in' && (
+                      <Button size="sm" variant="outline" onClick={() => { cloneCatalogItemToCustom(item.id); setToast('Built-in item cloned to Custom'); }}>
+                        Clone
                       </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TabsContent>
-
-        <TabsContent value="sets" className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          {BUILT_IN_CATALOG_SETS.map((set) => (
-            <Card key={set.id}>
-              <CardHeader>
-                <CardTitle className="text-base">{set.name}</CardTitle>
-              </CardHeader>
-              <CardContent className="flex items-center justify-between">
-                <Badge>{set.itemIds.length} items</Badge>
-                <Button size="sm" variant="outline" onClick={() => setActiveTab('items')}>
-                  View items
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </TabsContent>
-
-        <TabsContent value="tags" className="space-y-2">
-          <p className="text-sm text-swade-text-muted">Canonical tags for this setting.</p>
-          <div className="flex flex-wrap gap-2">
-            {VEGAS_TAG_POOL.map((tag) => (
-              <Badge key={tag} variant="secondary">{tag}</Badge>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="health" className="space-y-2">
-          <Alert variant="warning">
-            <AlertDescription>
-              <p className="font-medium">Items missing tags: {itemsMissingTags.length}</p>
-              <Button size="sm" variant="outline" className="mt-2" onClick={() => applyHealthFilter('missing-tags')}>Filter in Items</Button>
-            </AlertDescription>
-          </Alert>
-          <Alert variant="warning">
-            <AlertDescription>
-              <p className="font-medium">Items missing legalStatus: {itemsMissingLegal.length}</p>
-              <Button size="sm" variant="outline" className="mt-2" onClick={() => applyHealthFilter('missing-legal')}>Filter in Items</Button>
-            </AlertDescription>
-          </Alert>
-          <Alert variant="warning">
-            <AlertDescription>
-              <p className="font-medium">Unknown tags: {unknownTagSet.size}</p>
-              <p className="text-xs text-swade-text-muted">{[...unknownTagSet].join(', ') || 'None'}</p>
-              <Button size="sm" variant="outline" className="mt-2" onClick={() => applyHealthFilter('unknown-tags')}>Filter in Items</Button>
-            </AlertDescription>
-          </Alert>
-        </TabsContent>
-      </Tabs>
+                    )}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={item.source === 'built-in'}
+                      onClick={() => {
+                        const deleted = deleteCatalogItem(item.id);
+                        setToast(deleted ? 'Item deleted' : 'Built-in items cannot be deleted');
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

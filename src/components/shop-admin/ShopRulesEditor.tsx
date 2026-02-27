@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Command,
   CommandEmpty,
@@ -13,7 +13,9 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { PricingProfile, ShopRuleConfig } from '@/models/shop';
 import { MultiSelectPicker } from '@/components/shop-admin/MultiSelectPicker';
 
@@ -40,6 +42,10 @@ interface ShopRulesEditorProps {
   onAddException: (itemId: string) => void;
 }
 
+/**
+ * Rules editor UI for a shop location.
+ * Provides visual grouping for inventory filters, legality/pricing, and item exceptions.
+ */
 export function ShopRulesEditor({
   categories,
   tags,
@@ -67,12 +73,10 @@ export function ShopRulesEditor({
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Inventory rules</CardTitle>
+          <CardDescription>Select item categories and tag rules to define what appears in this shop.</CardDescription>
         </CardHeader>
+        <Separator />
         <CardContent className="space-y-3">
-          <p className="text-sm text-swade-text-muted">
-            Select item categories and tag rules to define what appears in this shop.
-          </p>
-
           <MultiSelectPicker
             label="Categories"
             triggerLabel="Select categories"
@@ -81,6 +85,7 @@ export function ShopRulesEditor({
             options={categories}
             selected={locationRules.includeCategories}
             onToggle={onToggleCategory}
+            emptyStateBadgeLabel="None selected"
           />
 
           <div className="grid gap-3 md:grid-cols-2">
@@ -92,6 +97,7 @@ export function ShopRulesEditor({
               options={tags}
               selected={locationRules.includeTags}
               onToggle={onToggleIncludeTag}
+              emptyStateBadgeLabel="None selected"
             />
 
             <MultiSelectPicker
@@ -102,6 +108,7 @@ export function ShopRulesEditor({
               options={tags}
               selected={locationRules.excludeTags}
               onToggle={onToggleExcludeTag}
+              emptyStateBadgeLabel="None selected"
             />
           </div>
         </CardContent>
@@ -110,14 +117,14 @@ export function ShopRulesEditor({
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Legality and pricing</CardTitle>
+          <CardDescription>Control legal-status filtering and pricing behavior.</CardDescription>
         </CardHeader>
+        <Separator />
         <CardContent className="space-y-3">
-          <p className="text-sm text-swade-text-muted">Control legal-status filtering and pricing behavior.</p>
-
           <div className="space-y-2">
             <Label>Legality mode</Label>
             <Select value={legalityMode} onValueChange={(value) => onLegalityModeChange(value as 'any' | 'legal' | 'illegal' | 'custom')}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -165,7 +172,7 @@ export function ShopRulesEditor({
             <div className="space-y-2">
               <Label>Pricing profile</Label>
               <Select value={locationRules.pricingProfile.id} onValueChange={onPricingProfileChange}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select pricing profile" />
                 </SelectTrigger>
                 <SelectContent>
@@ -184,45 +191,39 @@ export function ShopRulesEditor({
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Exceptions</CardTitle>
+          <CardDescription>Pin or ban specific items regardless of broad rules.</CardDescription>
         </CardHeader>
+        <Separator />
         <CardContent className="space-y-3">
-          <p className="text-sm text-swade-text-muted">Pin or ban specific items regardless of broad rules.</p>
-
-          <div className="grid gap-3 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Pinned</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-28">
-                  <div className="space-y-1 text-sm">
-                    {locationRules.pinnedItemIds.length === 0
-                      ? 'No pinned items'
-                      : locationRules.pinnedItemIds.map((id) => <div key={id}>{locationNameById[id] ?? id}</div>)}
-                  </div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Banned</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-28">
-                  <div className="space-y-1 text-sm">
-                    {locationRules.bannedItemIds.length === 0
-                      ? 'No banned items'
-                      : locationRules.bannedItemIds.map((id) => <div key={id}>{locationNameById[id] ?? id}</div>)}
-                  </div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
-          </div>
+          <Tabs defaultValue="pinned" className="space-y-3">
+            <TabsList className="w-full">
+              <TabsTrigger value="pinned">Pinned</TabsTrigger>
+              <TabsTrigger value="banned">Banned</TabsTrigger>
+            </TabsList>
+            <TabsContent value="pinned">
+              <ScrollArea className="h-28 rounded-md border p-3">
+                <div className="space-y-1 text-sm">
+                  {locationRules.pinnedItemIds.length === 0
+                    ? 'No pinned items'
+                    : locationRules.pinnedItemIds.map((id) => <div key={id}>{locationNameById[id] ?? id}</div>)}
+                </div>
+              </ScrollArea>
+            </TabsContent>
+            <TabsContent value="banned">
+              <ScrollArea className="h-28 rounded-md border p-3">
+                <div className="space-y-1 text-sm">
+                  {locationRules.bannedItemIds.length === 0
+                    ? 'No banned items'
+                    : locationRules.bannedItemIds.map((id) => <div key={id}>{locationNameById[id] ?? id}</div>)}
+                </div>
+              </ScrollArea>
+            </TabsContent>
+          </Tabs>
 
           <Dialog open={exceptionDialogOpen} onOpenChange={onExceptionDialogOpenChange}>
             <DialogTrigger asChild>
               <Button type="button" variant="outline">
-                Add Exception
+                Add exception
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -230,7 +231,7 @@ export function ShopRulesEditor({
                 <DialogTitle>Add exception</DialogTitle>
               </DialogHeader>
               <Select value={exceptionMode} onValueChange={(value) => onExceptionModeChange(value as 'pin' | 'ban')}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

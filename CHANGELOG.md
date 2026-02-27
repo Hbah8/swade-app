@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.8.3 - 2026-02-27
+
+- Improved Shop Admin Rules section visuals while keeping behavior unchanged: consistent shadcn card structure, clearer descriptions, and cleaner spacing rhythm.
+- Standardized inventory/tag multi-select presentation with explicit empty-state badges and consistent selected badge summaries.
+- Simplified Exceptions presentation from nested cards to `Pinned | Banned` tabs within a single card.
+- Added interaction coverage for rules editor controls (picker selection callback and tab switching behavior).
+- Fixed mixed test-environment setup issue (`window is not defined`) via guarded browser-only mock in test setup.
+
 ## v0.8.2 - 2026-02-23
 
 - Refactored `ShopAdminPage` into focused UI components under `src/components/shop-admin/` while preserving existing behavior and UX contract.

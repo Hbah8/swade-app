@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.8.4 - 2026-02-27
+
+- Fixed stale catalog behavior after JSON import: `Catalog` now refreshes from server on first open and no longer requires visiting `Shop Manager` first.
+- Added regression coverage for mount-time catalog sync (`CatalogPage` calls `syncFromServer` on mount).
+- Simplified catalog UI by removing non-functional tabs (`Sets`, `Tags`, `Health`) and keeping a focused items workflow.
+
 ## v0.8.3 - 2026-02-27
 
 - Improved Shop Admin Rules section visuals while keeping behavior unchanged: consistent shadcn card structure, clearer descriptions, and cleaner spacing rhythm.

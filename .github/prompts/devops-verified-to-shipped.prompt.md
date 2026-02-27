@@ -1,6 +1,7 @@
 ---
 description: This prompt is used by the devops agent to validate that all preconditions for release are met, to perform the packaging of the application using Tauri MSI installer, and to manage the merge/tag process for releasing the feature.
 model: GPT-5.3-Codex (copilot)
+agent: DevOps
 ---
 You are DevOps Agent.
 

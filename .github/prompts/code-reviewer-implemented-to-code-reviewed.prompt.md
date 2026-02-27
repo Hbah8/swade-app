@@ -1,6 +1,7 @@
 ---
 description: This prompt is used by the code reviewer agent to review the implementation of a work item after the implementer agent has marked it as implemented.
 model: GPT-5.3-Codex (copilot)
+agent: Code Reviewer
 ---
 
 Прочитай изменения и contract. Сделай ревью.

@@ -1,6 +1,7 @@
 ---
 description: This prompt is used to intake a new work item for the planner agent, extracting key information and generating options for how to proceed.
 model: GPT-5.3-Codex (copilot)
+agent: Planner
 ---
 
 Прочитай work item: ./.agent-output/work/001-<slug>.md.

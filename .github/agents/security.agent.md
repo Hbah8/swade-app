@@ -24,6 +24,21 @@ handoffs:
     send: false
 ---
 
+## State Contract (MANDATORY)
+
+**Allowed Input State**: CONTRACT or IMPLEMENTED  
+**Allowed Output State**: SAME or VERIFIED (gate update)  
+**Primary Transformation**: Security review; set security gate; raise blockers
+
+## Work Item Protocol (MANDATORY)
+
+- Use `./.agent-output/work/<ID>-<slug>.md` as the single source of truth (see `states.md` and `document-lifecycle`).
+- Read the work item first. Do not operate from chat context alone.
+- Write/update your artifact under `./.agent-output/<area>/` and link it in the work item `evidence`.
+- Update only the fields you own (e.g., your gate status). Do not advance `state` unless your contract explicitly allows it.
+
+
+
 # Security Agent - Comprehensive Security Review Specialist
 
 ## Mission Statement

@@ -1,6 +1,6 @@
 # SWADE App - Product Roadmap
 
-**Last Updated**: 2026-02-24 00:20  
+**Last Updated**: 2026-02-27 16:40  
 **Roadmap Owner**: roadmap agent  
 **Strategic Vision**: Comprehensive digital toolset for Savage Worlds GMs and players, eliminating preparation overhead and enabling seamless in-session reference and management.
 
@@ -18,6 +18,7 @@
 
 | Date & Time | Change | Rationale |
 |-------------|--------|-----------|
+| 2026-02-27 16:40 | Released v0.8.3 with Plan [006] | User-confirmed release completed: MSI built, tag `v0.8.3` pushed, PR #1 merged to `main`. |
 | 2026-02-24 00:20 | Released v0.8.2 with Plan [005] | User approved release; tag `v0.8.2` and branch `main` pushed successfully. |
 | 2026-02-23 23:55 | Plan 005 committed locally; v0.8.2 ready for release approval | UAT approved and Stage 1 DevOps commit completed; awaiting explicit user confirmation for push/tag. |
 | 2026-02-23 21:40 | Added Plan 005 (v0.8.2) refactor-only maintainability work | Code review noted ShopAdminPage maintainability risks; follow-up refactor reduces future change risk. |
@@ -161,7 +162,7 @@ So that shop management is fast, clean, and shareable without relying on raw JSO
 ### Epic 0.8.2: Shop Manager Admin Layout
 
 **Priority**: P1  
-**Status**: Planned
+**Status**: Delivered
 
 **User Story**:  
 As a Savage Worlds GM,  
@@ -193,6 +194,7 @@ So that I can configure shops faster with fewer errors during prep and live sess
 **Status Notes**:
 - 2026-02-23: Epic created based on user feedback (current layout feels cluttered and non-admin-like)
 - 2026-02-23: Plan [004] created and under critique review
+- 2026-02-27: Epic refinement delivered via Plans [005] and [006]; released as v0.8.2 and v0.8.3.
 
 **Scope reference**: Plan [004]
 
@@ -200,28 +202,25 @@ So that I can configure shops faster with fewer errors during prep and live sess
 
 ## Active Release Tracker
 
-**Current Working Release**: v0.8.2
+**Current Working Release**: v0.8.4
 
 | Plan ID | Title | UAT Status | Committed |
 |---------|-------|------------|-----------|
-| 005 | Shop Admin Page Refactor (Maintainability) | Approved | ✓ |
+| — | No active plans assigned yet | — | — |
 
-**Release Status**: Released
-**Ready for Release**: Completed
+**Release Status**: 0 of 0 plans committed
+**Ready for Release**: No
 **Blocking Items**: None
 
 ### Release Candidate
 
-**v0.8.1** is ready for release:
-
-| Plan ID | Title | UAT Status | Committed |
-|---------|-------|------------|-----------|
-| 004 | Shop Manager Admin Layout Refinement | Approved | ✓ |
+No active release candidate.
 
 ### Previous Releases
 
 | Version | Date | Plans Included | Status |
 |---------|------|----------------|--------|
+| v0.8.3 | 2026-02-27 | [006] Improve Admin Rules Section Visuals | Released |
 | v0.8.2 | 2026-02-24 | [005] Shop Admin Page Refactor (Maintainability) | Released |
 | v0.8.0 | 2026-02-23 | [003] Setting-Scoped Catalog & Rule-Based Shops | Released |
 | v0.7.2 | 2026-02-22 | [002] Player Shop View Data Table + Filters | Released |
